@@ -26,12 +26,13 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
 @Composable
 fun MyNavigation(){
 
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Register.route){
+    NavHost(navController = navController, startDestination = Home.route){
 
         composable(Register.route){
             RegisterScreen(navController)
