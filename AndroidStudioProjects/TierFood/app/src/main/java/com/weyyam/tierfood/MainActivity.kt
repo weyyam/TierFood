@@ -8,10 +8,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.weyyam.tierfood.ui.theme.TierFoodTheme
-import com.weyyam.tierfood.Home
-import com.weyyam.tierfood.Register
-import com.weyyam.tierfood.Profile
-import com.weyyam.tierfood.Search
+import com.weyyam.tierfood.screens.HomeScreen
+import com.weyyam.tierfood.screens.ProfileScreen
+import com.weyyam.tierfood.screens.RegisterScreen
+import com.weyyam.tierfood.screens.SearchScreen
 
 
 class MainActivity : ComponentActivity() {
