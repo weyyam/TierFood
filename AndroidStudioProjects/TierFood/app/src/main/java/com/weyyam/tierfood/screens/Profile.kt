@@ -12,20 +12,24 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.weyyam.tierfood.Home
 import com.weyyam.tierfood.navbars.BottomBarAppView
+import com.weyyam.tierfood.navbars.TopBarAppView
 
 @Composable
 fun ProfileScreen(navController: NavHostController){
-    
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ){
-        Column(modifier =Modifier.fillMaxSize()) {
-            Text(text = "You are in the Profile")
-            Spacer(modifier = Modifier.weight(1f))
-            BottomBarAppView(navController = navController)
-            //To make it such that the Bar stays on the bottom add lazy list and move BottomBarAppView out of the column
-        }    
-        
+    Column(modifier = Modifier.fillMaxSize()) {
+        TopBarAppView(navController = navController)
+        Box(
+            modifier = Modifier.weight(1f)
+        ){
+            Column(modifier =Modifier.fillMaxSize()) {
+                Text(text = "You are in the Profile")
+                Spacer(modifier = Modifier.weight(1f))
+                BottomBarAppView(navController = navController)
+                //To make it such that the Bar stays on the bottom add lazy list and move BottomBarAppView out of the column
+            }
+
+        }
     }
+
     
 }

@@ -11,20 +11,26 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.weyyam.tierfood.Search
 import com.weyyam.tierfood.navbars.BottomBarAppView
+import com.weyyam.tierfood.navbars.TopBarAppView
 
 
 @Composable
 fun HomeScreen(navController: NavHostController){
 
-    Box(modifier = Modifier.fillMaxSize()
-    ){
-        Column(modifier = Modifier.fillMaxSize()) {
-            Text(text = "You are in Home Screen")
-            Spacer(modifier = Modifier.weight(1f))
-            BottomBarAppView(navController = navController)
-        }
 
+    Column(modifier = Modifier.fillMaxSize()) {
+        TopBarAppView(navController = navController)
+        Box(modifier = Modifier.weight(1f)
+        ){
+            Column(modifier = Modifier.fillMaxSize()) {
+                Text(text = "You are in Home Screen")
+                Spacer(modifier = Modifier.weight(1f))
+                BottomBarAppView(navController = navController)
+            }
+
+        }
     }
+
 
 
 }

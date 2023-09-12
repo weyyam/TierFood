@@ -13,22 +13,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.weyyam.tierfood.navbars.BottomBarAppView
+import com.weyyam.tierfood.navbars.TopBarAppView
 
 
 @Composable
 fun SearchScreen(navController: NavHostController) {
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween)
-        {
-            Text(text = "You are in the search page")
-            Spacer(modifier = Modifier.weight(1f))
-            BottomBarAppView(navController = navController)
-            //To make it such that the Bar stays on the bottom add lazy list and move BottomBarAppView out of the column
 
+    Column(modifier = Modifier.fillMaxSize()) {
+        TopBarAppView(navController = navController)
+        Box(modifier = Modifier.weight(1f)) {
+            Column(modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.SpaceBetween)
+            {
+                Text(text = "You are in the search page")
+                Spacer(modifier = Modifier.weight(1f))
+                BottomBarAppView(navController = navController)
+                //To make it such that the Bar stays on the bottom add lazy list and move BottomBarAppView out of the column
+
+            }
         }
     }
+
 
 
 
