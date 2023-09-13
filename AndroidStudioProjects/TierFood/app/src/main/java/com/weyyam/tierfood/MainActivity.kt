@@ -1,47 +1,56 @@
 package com.weyyam.tierfood
 
+import android.app.Activity.RESULT_OK
+import android.content.ContentValues.TAG
+import android.content.IntentSender
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.firebase.BuildConfig
 import com.google.firebase.FirebaseApp
 import com.weyyam.tierfood.ui.theme.TierFoodTheme
 import com.weyyam.tierfood.screens.HomeScreen
 import com.weyyam.tierfood.screens.ProfileScreen
 import com.weyyam.tierfood.screens.RegisterScreen
 import com.weyyam.tierfood.screens.SearchScreen
+import com.weyyam.tierfood.sign_in.GoogleAuthUiClient
+import com.weyyam.tierfood.sign_in.SignInState
+import com.weyyam.tierfood.sign_in.SignInViewModel
+import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
 
-
-    private lateinit var oneTapClient: SignInClient
-    private lateinit var signInRequest: BeginSignInRequest
-
+    private val googleAuthUiClient by lazy {
+        GoogleAuthUiClient(
+            context = applicationContext,
+            oneTapClient = Identity.getSignInClient(applicationContext)
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        FirebaseApp.initializeApp(this)
         super.onCreate(savedInstanceState)
+        FirebaseApp.initializeApp(this)
 
-        oneTapClient = Identity.getSignInClient(this)
-        signInRequest = BeginSignInRequest.Builder()
-            .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.Builder()
-                .setSupported(true)
-                .build())
-            .setGoogleIdTokenRequestOptions(
-                BeginSignInRequest.GoogleIdTokenRequestOptions.Builder()
-                    .setSupported(true)
-                    .setServerClientId(getString(R.string.your_web_client_id))
-                    .setFilterByAuthorizedAccounts(true)
-                    .build())
-            .setAutoSelectEnabled(true).build()
         setContent {
             TierFoodTheme {
                 MyNavigation()
@@ -49,27 +58,67 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
+    @Composable
+    fun MyNavigation(){
+
+        val navController = rememberNavController()
+
+        NavHost(navController = navController, startDestination = Register.route){
+
+            composable(Register.route){
+                val viewModel = viewModel<SignInViewModel>()
+                val state by viewModel.state.collectAsState()
+
+                val launcher = rememberLauncherForActivityResult(
+                    contract = ActivityResultContracts.StartIntentSenderForResult(),
+                    onResult = { result ->
+                        if(result.resultCode == RESULT_OK){
+                            lifecycleScope.launch{
+                                val signInResult = googleAuthUiClient.signInWithIntent(
+                                    intent = result.data ?: return@launch
+                                )
+                                viewModel.onSignInResult(signInResult)
+                            }
+                        }
+                    }
+                )
+
+                LaunchedEffect(key1 = state.isSignInSuccessful){
+                    if(state.isSignInSuccessful){
+                        Toast.makeText(
+                            applicationContext,
+                            "Sign in successful",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+
+                RegisterScreen(
+                    state = state,
+                    onSignInClick = {
+                        lifecycleScope.launch {
+                            val signInIntentSender = googleAuthUiClient.signIn()
+                            launcher.launch(
+                                IntentSenderRequest.Builder(
+                                    signInIntentSender ?: return@launch
+                                ).build()
+                            )
+                        }
 
 
-@Composable
-fun MyNavigation(){
+                    }
+                )
 
-    val navController = rememberNavController()
-
-    NavHost(navController = navController, startDestination = Register.route){
-
-        composable(Register.route){
-            RegisterScreen(navController)
-        }
-        composable(Home.route){
-            HomeScreen(navController)
-        }
-        composable(Profile.route){
-            ProfileScreen(navController)
-        }
-        composable(Search.route){
-            SearchScreen(navController)
+            }
+            composable(Home.route){
+                HomeScreen(navController)
+            }
+            composable(Profile.route){
+                ProfileScreen(navController)
+            }
+            composable(Search.route){
+                SearchScreen(navController)
+            }
         }
     }
 }

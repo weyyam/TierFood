@@ -1,17 +1,42 @@
 package com.weyyam.tierfood.screens
 
+import android.widget.Toast
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
+import com.google.android.gms.auth.api.credentials.CredentialRequest
+import com.google.android.gms.auth.api.credentials.Credentials
+import com.google.android.gms.auth.api.credentials.CredentialsClient
+import com.google.android.gms.auth.api.credentials.IdentityProviders
+import com.google.android.gms.auth.api.identity.CredentialSavingClient
 import com.weyyam.tierfood.Home
+import com.weyyam.tierfood.sign_in.SignInState
 
 
 @Composable
-fun RegisterScreen(navController: NavHostController){
+fun RegisterScreen(
+    state: SignInState,
+    onSignInClick: () -> Unit
+){
+    val context = LocalContext.current
+    LaunchedEffect(key1 = state.signInError){
+        state.signInError?.let { error ->
+            Toast.makeText(
+                context,
+                error,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
 
-    Button(onClick = {navController.navigate(Home.route)}) {
-        Text(text = "Sign in go to home ")
+
+    
+    Button(onClick = { onSignInClick }) {
+        Text(text = "Sign in")
+
     }
 }
 

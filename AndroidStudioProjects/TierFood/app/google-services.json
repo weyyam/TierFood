@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "768752322941",
+    "project_id": "tierfood-d1dd0",
+    "storage_bucket": "tierfood-d1dd0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768752322941:android:73334cb33015f321e56414",
+        "android_client_info": {
+          "package_name": "com.weyyam.tierfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "768752322941-hmfr0au0rtnvmq8ujkc0el2imjejtjuq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAefzJWphJWDuR1TV5ZaVnvpy7BuADoY3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "768752322941-hmfr0au0rtnvmq8ujkc0el2imjejtjuq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
