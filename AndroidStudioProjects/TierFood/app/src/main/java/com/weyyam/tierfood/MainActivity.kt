@@ -72,6 +72,14 @@ class MainActivity : ComponentActivity() {
                 val viewModel = viewModel<SignInViewModel>()
                 val state by viewModel.state.collectAsStateWithLifecycle()
 
+                LaunchedEffect(key1 = Unit){
+                    if(googleAuthUiClient.getSignedInUser() != null){
+                        navController.navigate(Home.route){
+                            popUpTo(Register.route){inclusive = true}
+                        }
+                    }
+                }
+
                 val launcher = rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.StartIntentSenderForResult(),
                     onResult = { result ->
@@ -81,10 +89,13 @@ class MainActivity : ComponentActivity() {
                                     intent = result.data?: return@launch
                                 )
                                 viewModel.onSignInResult(signInResult)
+
                             }
                         }
                     }
                 )
+
+
 
                 LaunchedEffect(key1 = state.isSignInSuccessful){
                     if(state.isSignInSuccessful){
@@ -93,12 +104,16 @@ class MainActivity : ComponentActivity() {
                             "Sign in successful",
                             Toast.LENGTH_LONG
                         ).show()
+                        navController.navigate(Home.route){
+                            popUpTo(Register.route){inclusive = true}
+                        }
+                        viewModel.resetState()
                     }
                 }
 
                 RegisterScreen(
                     state = state,
-                    navController = ,
+                    navController = navController,
                     onSignInClick = {
                         Log.d("SignIn", "Sign in button clicked")
                         lifecycleScope.launch{
@@ -108,9 +123,7 @@ class MainActivity : ComponentActivity() {
                                 Log.d("SignIn", "Receved intent sender: $signInIntentSender")
 
                                 if(signInIntentSender != null){
-                                    launcher.launch(
-                                        IntentSenderRequest.Builder(signInIntentSender).build()
-                                    )
+                                    launcher.launch(IntentSenderRequest.Builder(signInIntentSender).build())
                                 }else{
                                     Log.e("SignIn", "signInIntentSender is null")
                                 }
@@ -128,7 +141,21 @@ class MainActivity : ComponentActivity() {
                 HomeScreen(navController)
             }
             composable(Profile.route){
-                ProfileScreen(navController)
+                ProfileScreen(
+                    navController,
+                    onSignOut = {
+                        lifecycleScope.launch {
+                            googleAuthUiClient.signOut()
+                            Toast.makeText(
+                                applicationContext,
+                                "Signed out",
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                            navController.popBackStack()
+
+                        }
+                })
             }
             composable(Search.route){
                 SearchScreen(navController)
