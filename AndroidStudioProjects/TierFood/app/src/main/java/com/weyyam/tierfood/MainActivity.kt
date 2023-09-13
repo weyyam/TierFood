@@ -1,5 +1,6 @@
 package com.weyyam.tierfood
 
+import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.ContentValues.TAG
 import android.content.IntentSender
@@ -20,6 +21,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -34,6 +36,7 @@ import com.weyyam.tierfood.screens.ProfileScreen
 import com.weyyam.tierfood.screens.RegisterScreen
 import com.weyyam.tierfood.screens.SearchScreen
 import com.weyyam.tierfood.sign_in.GoogleAuthUiClient
+import com.weyyam.tierfood.sign_in.SignInResult
 import com.weyyam.tierfood.sign_in.SignInState
 import com.weyyam.tierfood.sign_in.SignInViewModel
 import kotlinx.coroutines.launch
@@ -50,7 +53,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(this)
 
         setContent {
             TierFoodTheme {
@@ -73,10 +75,10 @@ class MainActivity : ComponentActivity() {
                 val launcher = rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.StartIntentSenderForResult(),
                     onResult = { result ->
-                        if(result.resultCode == RESULT_OK){
+                        if(result.resultCode == Activity.RESULT_OK){
                             lifecycleScope.launch{
                                 val signInResult = googleAuthUiClient.signInWithIntent(
-                                    intent = result.data ?: return@launch
+                                    intent = result.data?: return@launch
                                 )
                                 viewModel.onSignInResult(signInResult)
                             }
@@ -96,14 +98,25 @@ class MainActivity : ComponentActivity() {
 
                 RegisterScreen(
                     state = state,
+                    navController = ,
                     onSignInClick = {
-                        lifecycleScope.launch {
-                            val signInIntentSender = googleAuthUiClient.signIn()
-                            launcher.launch(
-                                IntentSenderRequest.Builder(
-                                    signInIntentSender ?: return@launch
-                                ).build()
-                            )
+                        Log.d("SignIn", "Sign in button clicked")
+                        lifecycleScope.launch{
+                            Log.d("SignIn", "Inside corutine")
+                            try {
+                                val signInIntentSender = googleAuthUiClient.signIn()
+                                Log.d("SignIn", "Receved intent sender: $signInIntentSender")
+
+                                if(signInIntentSender != null){
+                                    launcher.launch(
+                                        IntentSenderRequest.Builder(signInIntentSender).build()
+                                    )
+                                }else{
+                                    Log.e("SignIn", "signInIntentSender is null")
+                                }
+                            }catch (e: Exception){
+                                Log.e("SignIn", "Error during signIn", e)
+                            }
                         }
 
 
