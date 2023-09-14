@@ -142,7 +142,7 @@ class MainActivity : ComponentActivity() {
             }
             composable(Profile.route){
                 ProfileScreen(
-                    navController,
+                    navController = navController,
                     onSignOut = {
                         lifecycleScope.launch {
                             googleAuthUiClient.signOut()
@@ -151,8 +151,9 @@ class MainActivity : ComponentActivity() {
                                 "Signed out",
                                 Toast.LENGTH_LONG
                             ).show()
-
-                            navController.popBackStack()
+                            navController.navigate(Register.route){
+                                popUpTo(Home.route){inclusive = true}
+                            }
 
                         }
                 })
