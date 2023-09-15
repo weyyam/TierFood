@@ -1,6 +1,7 @@
 package com.weyyam.tierfood.navbars
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -25,7 +27,8 @@ fun TopBarAppView(navController: NavController){
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.dp),
+            .height(50.dp)
+            .background(colorResource(id = R.color.background_light)),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
     ){

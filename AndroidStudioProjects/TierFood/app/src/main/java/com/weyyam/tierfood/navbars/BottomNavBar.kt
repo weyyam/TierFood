@@ -1,6 +1,7 @@
 package com.weyyam.tierfood.navbars
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,7 +29,8 @@ fun BottomBarAppView(navController :NavHostController){
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.dp),
+            .height(50.dp)
+            .background(colorResource(id = R.color.background_light)),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
         ){
@@ -35,7 +38,7 @@ fun BottomBarAppView(navController :NavHostController){
         Image(
             alignment = Alignment.Center,
             modifier = Modifier
-                .clickable {navController.navigate(Search.route)}
+                .clickable { navController.navigate(Search.route) }
                 .size(36.dp),
             painter = painterResource(id = R.drawable.baseline_search_24) ,
             contentDescription = "Person for Profile",
@@ -44,7 +47,7 @@ fun BottomBarAppView(navController :NavHostController){
         Image(
             alignment = Alignment.Center,
             modifier = Modifier
-                .clickable {navController.navigate(Home.route)}
+                .clickable { navController.navigate(Home.route) }
                 .size(36.dp),
             painter = painterResource(id = R.drawable.baseline_home_24) ,
             contentDescription = "Person for Profile",
@@ -53,7 +56,7 @@ fun BottomBarAppView(navController :NavHostController){
         Image(
             alignment = Alignment.Center,
             modifier = Modifier
-                .clickable {navController.navigate(Profile.route)}
+                .clickable { navController.navigate(Profile.route) }
                 .size(36.dp),
             painter = painterResource(id = R.drawable.baseline_person_24) ,
             contentDescription = "Person for Profile",
