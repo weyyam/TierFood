@@ -22,11 +22,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.rememberNavController
 import com.weyyam.tierfood.R
 import com.weyyam.tierfood.Tier
 import com.weyyam.tierfood.s_rank
-import com.weyyam.tierfood.screens.HomeScreen
 
 
 @Composable
@@ -36,7 +34,7 @@ fun FoodOfDayCard(tier: Tier){
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
-            .background(colorResource(id = R.color.background_dark))
+            .background(colorResource(id = R.color.background_SecondaryL))
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
             Row(modifier = Modifier

@@ -6,8 +6,8 @@
     <color name="green_c">#81C784</color>
     <color name="blue_d">#4FC3F7</color>
     <color name="purple_f">#9575CD</color>
-    <color name="background_dark">#393939</color>
-    <color name="background_light">#878787</color>
+    <color name="background_SecondaryL">#878787</color>//Light color is #878787
+    <color name="background_PrimaryD">#393939</color>//dark color is #393939
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

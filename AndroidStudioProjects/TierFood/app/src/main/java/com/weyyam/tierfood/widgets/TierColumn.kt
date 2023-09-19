@@ -34,7 +34,7 @@ fun TierRow(tier: Tier){
     Row(modifier = Modifier
         .fillMaxWidth()
         .height(75.dp)
-        .background(colorResource(id = R.color.background_dark)),
+        .background(colorResource(id = R.color.background_SecondaryL)),
         verticalAlignment = Alignment.CenterVertically,
 
 
@@ -52,7 +52,7 @@ fun TierRow(tier: Tier){
                 fontWeight = FontWeight.Bold)
         }
     }
-    Divider(color = colorResource(id = R.color.background_light), thickness = 1.dp)
+    Divider(color = colorResource(id = R.color.background_PrimaryD), thickness = 1.dp)
 
 }
 

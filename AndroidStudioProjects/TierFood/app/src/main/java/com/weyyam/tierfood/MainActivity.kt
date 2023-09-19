@@ -143,6 +143,7 @@ class MainActivity : ComponentActivity() {
             composable(Profile.route){
                 ProfileScreen(
                     navController = navController,
+                    userData = googleAuthUiClient.getSignedInUser(),
                     onSignOut = {
                         lifecycleScope.launch {
                             googleAuthUiClient.signOut()
@@ -156,7 +157,7 @@ class MainActivity : ComponentActivity() {
                             }
 
                         }
-                })
+                    })
             }
             composable(Search.route){
                 SearchScreen(navController)

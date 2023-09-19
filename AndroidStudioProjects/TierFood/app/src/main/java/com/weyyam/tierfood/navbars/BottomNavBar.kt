@@ -30,7 +30,7 @@ fun BottomBarAppView(navController :NavHostController){
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp)
-            .background(colorResource(id = R.color.background_light)),
+            .background(colorResource(id = R.color.background_PrimaryD)),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
         ){

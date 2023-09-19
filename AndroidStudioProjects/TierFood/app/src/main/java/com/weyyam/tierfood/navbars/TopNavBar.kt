@@ -19,7 +19,6 @@ import androidx.navigation.NavController
 import com.weyyam.tierfood.Home
 import com.weyyam.tierfood.Profile
 import com.weyyam.tierfood.R
-import com.weyyam.tierfood.Search
 
 @Composable
 fun TopBarAppView(navController: NavController){
@@ -28,7 +27,7 @@ fun TopBarAppView(navController: NavController){
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp)
-            .background(colorResource(id = R.color.background_light)),
+            .background(colorResource(id = R.color.background_PrimaryD)),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
     ){
