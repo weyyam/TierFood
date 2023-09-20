@@ -63,7 +63,7 @@ fun ProfileScreen(
                     Text(
                         text = userData.username,
                     textAlign = TextAlign.Center,
-                    fontSize = 36.sp,
+                    fontSize = 26.sp,
                     fontWeight = FontWeight.SemiBold)
                 }
                 Button(onClick = {
