@@ -18,14 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.google.android.gms.auth.api.credentials.CredentialRequest
-import com.google.android.gms.auth.api.credentials.Credentials
-import com.google.android.gms.auth.api.credentials.CredentialsClient
-import com.google.android.gms.auth.api.credentials.IdentityProviders
-import com.google.android.gms.auth.api.identity.CredentialSavingClient
-import com.weyyam.tierfood.Home
 import com.weyyam.tierfood.R
 import com.weyyam.tierfood.sign_in.SignInState
 
