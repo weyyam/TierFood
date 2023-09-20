@@ -24,7 +24,7 @@ import com.weyyam.tierfood.widgets.TiersColumn
 
 @Composable
 fun HomeScreen(navController: NavHostController){
-    val current_tier = s_rank
+    val currentTier = s_rank
 
     Column(modifier = Modifier.fillMaxSize()) {
         TopBarAppView(navController = navController)
@@ -35,7 +35,7 @@ fun HomeScreen(navController: NavHostController){
                     .fillMaxSize()
                     .background(colorResource(id = R.color.background_PrimaryD))
             ) {
-                FoodOfDayCard(tier = current_tier)
+                FoodOfDayCard(tier = currentTier)
                 Text(
                     text = "These are your saved Foods!",
                     modifier = Modifier

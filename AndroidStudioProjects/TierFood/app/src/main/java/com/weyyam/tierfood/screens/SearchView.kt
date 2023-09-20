@@ -1,12 +1,14 @@
 package com.weyyam.tierfood.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -29,15 +31,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.weyyam.tierfood.DataManager
+import com.weyyam.tierfood.FoodItem
 import com.weyyam.tierfood.R
 import com.weyyam.tierfood.navbars.BottomBarAppView
 import com.weyyam.tierfood.navbars.TopBarAppView
+import com.weyyam.tierfood.widgets.FoodListWidget
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(navController: NavHostController) {
-
 
     Column(modifier = Modifier.fillMaxSize()) {
         TopBarAppView(navController = navController)
@@ -73,6 +77,8 @@ fun SearchScreen(navController: NavHostController) {
                         ))
 
                 }
+
+                FoodListWidget()
                 Spacer(modifier = Modifier.weight(1f))
                 BottomBarAppView(navController = navController)
                 //To make it such that the Bar stays on the bottom add lazy list and move BottomBarAppView out of the column
@@ -87,6 +93,8 @@ fun SearchScreen(navController: NavHostController) {
 
 
 }
+
+
 
 
 @Preview(showBackground = true)
