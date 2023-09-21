@@ -71,6 +71,6 @@ fun TiersColumn(){
 
 @Composable
 @Preview(showBackground = true)
-fun previewtierrow(){
+fun Previewtierrow(){
     TiersColumn()
 }

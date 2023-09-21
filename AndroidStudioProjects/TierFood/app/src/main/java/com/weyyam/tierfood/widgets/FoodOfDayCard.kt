@@ -1,6 +1,5 @@
 package com.weyyam.tierfood.widgets
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,8 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.weyyam.tierfood.DataManager
-import com.weyyam.tierfood.FirestoreManager.db
 import com.weyyam.tierfood.R
 import com.weyyam.tierfood.Tier
 import com.weyyam.tierfood.s_rank
@@ -33,7 +30,6 @@ import com.weyyam.tierfood.s_rank
 @Composable
 fun FoodOfDayCard(tier: Tier){
 
-        val foodData = DataManager()
 
     Box(
         modifier = Modifier
@@ -78,6 +74,10 @@ fun FoodOfDayCard(tier: Tier){
     }
 
 }
+
+
+
+
 
 @Preview(showBackground = true)
 @Composable

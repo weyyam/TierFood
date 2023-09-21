@@ -1,5 +1,6 @@
 package com.weyyam.tierfood.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -36,6 +37,7 @@ import com.weyyam.tierfood.FoodItem
 import com.weyyam.tierfood.R
 import com.weyyam.tierfood.navbars.BottomBarAppView
 import com.weyyam.tierfood.navbars.TopBarAppView
+import com.weyyam.tierfood.widgets.FoodCategoriesGrid
 import com.weyyam.tierfood.widgets.FoodListWidget
 
 
@@ -78,7 +80,11 @@ fun SearchScreen(navController: NavHostController) {
 
                 }
 
-                FoodListWidget()
+                //FoodListWidget()
+                FoodCategoriesGrid(onCategorySelected = {selectedCategory ->
+
+                    Log.i("category", "the selected category is $selectedCategory")
+                })
                 Spacer(modifier = Modifier.weight(1f))
                 BottomBarAppView(navController = navController)
                 //To make it such that the Bar stays on the bottom add lazy list and move BottomBarAppView out of the column

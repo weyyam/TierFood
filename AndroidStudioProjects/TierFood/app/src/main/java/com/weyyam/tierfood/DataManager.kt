@@ -14,7 +14,9 @@ class DataManager {
                         it.id,
                         it.data["name"] as String,
                         it.data["description"] as String,
-                        it.data["tier"] as String) }
+                        it.data["tier"] as String,
+                        it.data["imageURL"] as String,
+                        it.data["type"] as String) }
                 success(foods)
                 Log.w("db", "database fetched all food documents")
             }
@@ -34,7 +36,9 @@ class DataManager {
                         document.id,
                         document.data?.get("name") as String,
                         document.data?.get("description") as String,
-                        document.data?.get("tier") as String)
+                        document.data?.get("tier") as String,
+                        document.data?.get("imageURL") as String,
+                        document.data?.get("type") as String)
                     success(food)
                 }
             }
@@ -48,5 +52,7 @@ data class FoodItem(
     val id: String,
     val name: String,
     val description: String,
-    val tier: String
+    val tier: String,
+    val imageURL: String,
+    val type: String
 )
