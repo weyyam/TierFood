@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.weyyam.tierfood.DataManager
@@ -38,7 +39,6 @@ import com.weyyam.tierfood.R
 import com.weyyam.tierfood.navbars.BottomBarAppView
 import com.weyyam.tierfood.navbars.TopBarAppView
 import com.weyyam.tierfood.widgets.FoodCategoriesGrid
-import com.weyyam.tierfood.widgets.FoodListWidget
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -78,13 +78,10 @@ fun SearchScreen(navController: NavHostController) {
                             containerColor = Color.White
                         ))
 
+
+
                 }
-
-                //FoodListWidget()
-                FoodCategoriesGrid(onCategorySelected = {selectedCategory ->
-
-                    Log.i("category", "the selected category is $selectedCategory")
-                })
+                FoodCategoriesGrid(navController = navController)
                 Spacer(modifier = Modifier.weight(1f))
                 BottomBarAppView(navController = navController)
                 //To make it such that the Bar stays on the bottom add lazy list and move BottomBarAppView out of the column
@@ -93,10 +90,6 @@ fun SearchScreen(navController: NavHostController) {
             }
         }
     }
-
-
-
-
 
 }
 

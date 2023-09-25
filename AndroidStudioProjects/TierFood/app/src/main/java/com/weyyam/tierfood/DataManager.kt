@@ -46,6 +46,35 @@ class DataManager {
                 failure(exception)
             }
     }
+
+    fun fetchFoodsByCategory(category: String?, success: (List<FoodItem>) -> Unit, failure: (Exception) -> Unit){
+        Log.i("FL", "fetchFoodsByCategory the category is $category")
+        val query = if (category != null){
+            db.collection("foods").whereEqualTo("type", category)
+        } else {
+            db.collection("foods")
+        }
+
+        query.get()
+            .addOnSuccessListener { result ->
+                val foods = result.map {
+                    FoodItem(
+                        it.id,
+                        it.data["name"] as String,
+                        it.data["description"] as String,
+                        it.data["tier"] as String,
+                        it.data["imageURL"] as String,
+                        it.data["type"] as String
+                    )
+                }
+                success(foods)
+                Log.w("db", "database fetched food documents for category: $category")
+            }
+            .addOnFailureListener { exception ->
+                failure(exception)
+                Log.w("db", "Error getting documents for category: $category", exception)
+            }
+    }
 }
 
 data class FoodItem(

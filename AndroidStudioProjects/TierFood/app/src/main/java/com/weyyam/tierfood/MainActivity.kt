@@ -39,6 +39,9 @@ import com.weyyam.tierfood.sign_in.GoogleAuthUiClient
 import com.weyyam.tierfood.sign_in.SignInResult
 import com.weyyam.tierfood.sign_in.SignInState
 import com.weyyam.tierfood.sign_in.SignInViewModel
+import com.weyyam.tierfood.widgets.FoodViewModel
+import com.weyyam.tierfood.widgets.FoodsListScreen
+import com.weyyam.tierfood.FoodsList
 import kotlinx.coroutines.launch
 
 
@@ -161,6 +164,15 @@ class MainActivity : ComponentActivity() {
             }
             composable(Search.route){
                 SearchScreen(navController)
+            }
+
+            composable(FoodsList.route){navBackStackEntry ->
+                val category = navBackStackEntry.arguments?.getString("category")
+                Log.d("FL","Before if statement in navcontroller")
+                if (category != null){
+                    Log.d("FL","FoodsListScreen if category statement passes")
+                    FoodsListScreen(viewModel = FoodViewModel(), category = category)
+                }
             }
         }
     }

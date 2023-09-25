@@ -19,3 +19,7 @@ object Profile: Destinations {
 object Search: Destinations {
     override val route = "Search"
 }
+
+object FoodsList: Destinations{
+    override val route = "FoodsList/{category}"
+}

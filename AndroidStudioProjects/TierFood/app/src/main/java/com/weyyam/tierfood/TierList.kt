@@ -1,8 +1,5 @@
 package com.weyyam.tierfood
 
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-
 data class Tier(
     val letter: String,
     val color: Int,

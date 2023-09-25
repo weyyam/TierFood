@@ -15,18 +15,26 @@ class FoodViewModel : ViewModel() {
     private val dataManager = DataManager()
 
     var foodList by mutableStateOf<List<FoodItem>?>(null)
+    var category by mutableStateOf<String?>(null)
 
     init {
-        fetchAllFoods()
+        fetchFoodsForCategory(category)
     }
 
-    private fun fetchAllFoods(){
-        dataManager.fetchAllFoods(
+    fun selectCategory(cat: String?){
+        category = cat
+        fetchFoodsForCategory(cat)
+    }
+
+    fun fetchFoodsForCategory(category: String?){
+        Log.i("FL", "fetchFoodsForCategory viewmodel is showing $category for category")
+        dataManager.fetchFoodsByCategory(
+            category = category,
             success = { foods ->
                 foodList = foods
             },
             failure = { exception ->
-                Log.d("db", "error using fetchallfoods $exception")
+                Log.d("db", "error using fetchFoodsForCategory $category $exception")
             }
         )
     }
