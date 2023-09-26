@@ -1,15 +1,12 @@
-package com.weyyam.tierfood.widgets
+package com.weyyam.tierfood.ui.widgets
 
 import android.util.Log
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.weyyam.tierfood.DataManager
-import com.weyyam.tierfood.FoodItem
+import com.weyyam.tierfood.data.DataManager
+import com.weyyam.tierfood.data.FoodItem
 
 class FoodViewModel : ViewModel() {
     private val dataManager = DataManager()

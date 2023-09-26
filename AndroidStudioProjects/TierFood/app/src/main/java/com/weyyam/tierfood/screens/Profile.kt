@@ -26,8 +26,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.weyyam.tierfood.R
-import com.weyyam.tierfood.navbars.BottomBarAppView
-import com.weyyam.tierfood.navbars.TopBarAppView
+import com.weyyam.tierfood.ui.navbars.BottomBarAppView
+import com.weyyam.tierfood.ui.navbars.TopBarAppView
 import com.weyyam.tierfood.sign_in.UserData
 
 @Composable

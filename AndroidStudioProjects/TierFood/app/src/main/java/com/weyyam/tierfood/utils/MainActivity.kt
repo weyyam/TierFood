@@ -1,9 +1,6 @@
-package com.weyyam.tierfood
+package com.weyyam.tierfood.utils
 
 import android.app.Activity
-import android.app.Activity.RESULT_OK
-import android.content.ContentValues.TAG
-import android.content.IntentSender
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -11,37 +8,31 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.IntentSenderRequest
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.identity.SignInClient
-import com.google.firebase.BuildConfig
-import com.google.firebase.FirebaseApp
-import com.weyyam.tierfood.ui.theme.TierFoodTheme
+import com.weyyam.tierfood.navigation.FoodsList
+import com.weyyam.tierfood.navigation.Home
+import com.weyyam.tierfood.navigation.Profile
+import com.weyyam.tierfood.navigation.Register
+import com.weyyam.tierfood.navigation.Search
 import com.weyyam.tierfood.screens.HomeScreen
 import com.weyyam.tierfood.screens.ProfileScreen
 import com.weyyam.tierfood.screens.RegisterScreen
 import com.weyyam.tierfood.screens.SearchScreen
 import com.weyyam.tierfood.sign_in.GoogleAuthUiClient
-import com.weyyam.tierfood.sign_in.SignInResult
-import com.weyyam.tierfood.sign_in.SignInState
 import com.weyyam.tierfood.sign_in.SignInViewModel
-import com.weyyam.tierfood.widgets.FoodViewModel
-import com.weyyam.tierfood.widgets.FoodsListScreen
-import com.weyyam.tierfood.FoodsList
+import com.weyyam.tierfood.ui.theme.TierFoodTheme
+import com.weyyam.tierfood.ui.widgets.FoodViewModel
+import com.weyyam.tierfood.ui.widgets.FoodsListScreen
 import kotlinx.coroutines.launch
 
 
@@ -56,7 +47,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(this)
         setContent {
             TierFoodTheme {
                 MyNavigation()
@@ -166,7 +156,7 @@ class MainActivity : ComponentActivity() {
                 SearchScreen(navController)
             }
 
-            composable(FoodsList.route){navBackStackEntry ->
+            composable(FoodsList.route){ navBackStackEntry ->
                 val category = navBackStackEntry.arguments?.getString("category")
                 Log.d("FL","Before if statement in navcontroller")
                 if (category != null){

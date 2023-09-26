@@ -15,11 +15,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.weyyam.tierfood.R
-import com.weyyam.tierfood.navbars.BottomBarAppView
-import com.weyyam.tierfood.navbars.TopBarAppView
-import com.weyyam.tierfood.s_rank
-import com.weyyam.tierfood.widgets.FoodOfDayCard
-import com.weyyam.tierfood.widgets.TiersColumn
+import com.weyyam.tierfood.ui.navbars.BottomBarAppView
+import com.weyyam.tierfood.ui.navbars.TopBarAppView
+import com.weyyam.tierfood.model.s_rank
+import com.weyyam.tierfood.ui.widgets.FoodOfDayCard
+import com.weyyam.tierfood.ui.widgets.TiersColumn
 
 
 @Composable

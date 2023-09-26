@@ -11,13 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TierFood"
-        android:name=".TierFoodApplicationClass"
+        android:name=".utils.TierFoodApplicationClass"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".utils.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.TierFood">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

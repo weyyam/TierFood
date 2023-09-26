@@ -1,4 +1,4 @@
-package com.weyyam.tierfood
+package com.weyyam.tierfood.navigation
 
 interface Destinations {
     val route: String
@@ -20,6 +20,6 @@ object Search: Destinations {
     override val route = "Search"
 }
 
-object FoodsList: Destinations{
+object FoodsList: Destinations {
     override val route = "FoodsList/{category}"
 }

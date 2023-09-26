@@ -1,4 +1,4 @@
-package com.weyyam.tierfood.widgets
+package com.weyyam.tierfood.ui.widgets
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,8 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.weyyam.tierfood.R
-import com.weyyam.tierfood.Tier
-import com.weyyam.tierfood.s_rank
+import com.weyyam.tierfood.model.Tier
+import com.weyyam.tierfood.model.s_rank
 
 
 @Composable

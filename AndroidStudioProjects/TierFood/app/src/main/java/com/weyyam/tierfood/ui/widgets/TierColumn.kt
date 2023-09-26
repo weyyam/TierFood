@@ -1,4 +1,4 @@
-package com.weyyam.tierfood.widgets
+package com.weyyam.tierfood.ui.widgets
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -21,13 +21,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.weyyam.tierfood.R
-import com.weyyam.tierfood.Tier
-import com.weyyam.tierfood.a_rank
-import com.weyyam.tierfood.b_rank
-import com.weyyam.tierfood.c_rank
-import com.weyyam.tierfood.d_rank
-import com.weyyam.tierfood.f_rank
-import com.weyyam.tierfood.s_rank
+import com.weyyam.tierfood.model.Tier
+import com.weyyam.tierfood.model.a_rank
+import com.weyyam.tierfood.model.b_rank
+import com.weyyam.tierfood.model.c_rank
+import com.weyyam.tierfood.model.d_rank
+import com.weyyam.tierfood.model.f_rank
+import com.weyyam.tierfood.model.s_rank
 
 @Composable
 fun TierRow(tier: Tier){

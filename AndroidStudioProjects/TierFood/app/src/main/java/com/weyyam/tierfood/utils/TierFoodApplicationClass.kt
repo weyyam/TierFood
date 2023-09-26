@@ -1,4 +1,4 @@
-package com.weyyam.tierfood
+package com.weyyam.tierfood.utils
 
 import android.app.Application
 import com.google.firebase.FirebaseApp

@@ -1,4 +1,6 @@
-package com.weyyam.tierfood
+package com.weyyam.tierfood.model
+
+import com.weyyam.tierfood.R
 
 data class FoodCategory(
     val name: String,
