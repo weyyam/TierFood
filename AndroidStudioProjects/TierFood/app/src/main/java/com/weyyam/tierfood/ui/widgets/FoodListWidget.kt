@@ -4,10 +4,13 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.weyyam.tierfood.data.FoodItem
 import com.weyyam.tierfood.R
+import com.weyyam.tierfood.data.FoodItem
 
 
 @Composable
@@ -42,11 +45,14 @@ fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String){
         
     }
     if (foodList != null){
-        LazyColumn{
-            items(foodList){food ->
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            contentPadding = PaddingValues(16.dp),
+            content = {
+            itemsIndexed(foodList){index, food ->
                 FoodItemRow(food)
             }
-        }
+        })
     } else {
         Text(text = "Loading...")
     }
@@ -61,8 +67,14 @@ fun FoodItemRow(food: FoodItem){
     this is used to make the row for each individual food,
     this needs to be made to look pretty before finish
      */
-    Text(text = food.name)
-    NetworkImage(url = food.imageURL)
+    Box(
+        modifier = Modifier.size(75.dp)
+    ){
+
+        NetworkImage(url = food.imageURL)
+        Text(text = food.name)
+
+    }
 }
 
 @Composable
@@ -83,7 +95,7 @@ fun NetworkImage(url: String){
         painter = painter,
         contentDescription = null,
         modifier = Modifier
-            .size(50.dp, 50.dp)
+            .size(100.dp)
             .clip(RoundedCornerShape(4.dp)),
         contentScale = ContentScale.Crop)
 }
@@ -92,8 +104,6 @@ fun NetworkImage(url: String){
 
 @Composable
 @Preview(showBackground = true)
-fun PreviewCategoryIcon(){
-    CategoryIcon(category = "Fruits", imageResId = R.drawable.fruit_category,onClick = {
-
-    })
+fun PreviewFoodItemRow(){
+    FoodItemRow(food = FoodItem(id = "0", name = "Bluebarries", description = "This is the description", tier = "B", type = "Fruits", imageURL = "https://firebasestorage.googleapis.com/v0/b/tierfood-d1dd0.appspot.com/o/BlueBerries_image.png?alt=media&token=4b532482-fabd-47dc-84ad-8c8e9d3112b6"))
 }
