@@ -3,17 +3,24 @@ package com.weyyam.tierfood.ui.widgets
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -44,15 +51,17 @@ fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String){
         .background(colorResource(id = R.color.background_SecondaryL))) {
         
     }
-    if (foodList != null){
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(16.dp),
-            content = {
-            itemsIndexed(foodList){index, food ->
+    if (foodList != null) {
+        LazyColumn (
+            modifier = Modifier.padding(8.dp)
+                ){
+            items(foodList) { food ->
                 FoodItemRow(food)
+                Spacer(modifier = Modifier.padding(4.dp))
+                Divider(color = colorResource(id = R.color.background_PrimaryD))
+                Spacer(modifier = Modifier.padding(4.dp))
             }
-        })
+        }
     } else {
         Text(text = "Loading...")
     }
@@ -68,11 +77,19 @@ fun FoodItemRow(food: FoodItem){
     this needs to be made to look pretty before finish
      */
     Box(
-        modifier = Modifier.size(75.dp)
+        modifier = Modifier.fillMaxWidth()
     ){
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically) {
 
-        NetworkImage(url = food.imageURL)
-        Text(text = food.name)
+            NetworkImage(url = food.imageURL)
+            Text(text = food.name)
+            TierBoxFoodList(tier = food.tier)
+        }
+
 
     }
 }
@@ -95,8 +112,8 @@ fun NetworkImage(url: String){
         painter = painter,
         contentDescription = null,
         modifier = Modifier
-            .size(100.dp)
-            .clip(RoundedCornerShape(4.dp)),
+            .size(48.dp)
+            .clip(RoundedCornerShape(15)),
         contentScale = ContentScale.Crop)
 }
 
