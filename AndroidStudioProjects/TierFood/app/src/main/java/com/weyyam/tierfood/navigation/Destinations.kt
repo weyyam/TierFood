@@ -23,3 +23,7 @@ object Search: Destinations {
 object FoodsList: Destinations {
     override val route = "FoodsList/{category}"
 }
+
+object FoodProfile: Destinations{
+    override val route = "FoodProfile/{name}"
+}

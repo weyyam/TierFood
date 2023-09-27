@@ -84,6 +84,30 @@ class DataManager {
             }
     }
 
+    fun fetchFoodByName(name : String?, success: (FoodItem) -> Unit, failure: (Exception) -> Unit){
+        if (name == null){
+            failure(Exception("Name cannot be null"))
+            return
+        }
+
+        db.collection("foods")
+            .whereEqualTo("name", name)
+            .get()
+            .addOnSuccessListener { result ->
+                val foodItems = result.map { it.toFoodItem()}
+                if (foodItems.isNotEmpty()){
+                    success(foodItems.first())
+                    Log.w("DataManager", "database fetched food document with name: $name")
+                }else{
+                    failure(Exception("No food found with name: $name"))
+                }
+            }
+            .addOnFailureListener { exception ->
+                failure(exception)
+                Log.w("DataManager", "Error getting document with name: $name", exception)
+            }
+    }
+
     private fun QueryDocumentSnapshot.toFoodItem(): FoodItem {
         return FoodItem(
             id = id,

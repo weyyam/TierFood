@@ -15,10 +15,12 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.auth.api.identity.Identity
+import com.weyyam.tierfood.navigation.FoodProfile
 import com.weyyam.tierfood.navigation.FoodsList
 import com.weyyam.tierfood.navigation.Home
 import com.weyyam.tierfood.navigation.Profile
@@ -31,6 +33,7 @@ import com.weyyam.tierfood.screens.SearchScreen
 import com.weyyam.tierfood.sign_in.GoogleAuthUiClient
 import com.weyyam.tierfood.sign_in.SignInViewModel
 import com.weyyam.tierfood.ui.theme.TierFoodTheme
+import com.weyyam.tierfood.ui.widgets.FoodProfileScreen
 import com.weyyam.tierfood.ui.widgets.FoodViewModel
 import com.weyyam.tierfood.ui.widgets.FoodsListScreen
 import kotlinx.coroutines.launch
@@ -161,9 +164,20 @@ class MainActivity : ComponentActivity() {
                 Log.d("FL","Before if statement in navcontroller")
                 if (category != null){
                     Log.d("FL","FoodsListScreen if category statement passes")
-                    FoodsListScreen(viewModel = FoodViewModel(), category = category)
+                    FoodsListScreen(viewModel = FoodViewModel(), category = category, navController = navController)
                 }
             }
+
+
+            composable("${FoodProfile.route}/{name}"){ navBackStackEntry ->
+                Log.d("FP", FoodProfile.route)
+                val foodName = navBackStackEntry.arguments?.getString("name") ?: return@composable
+                Log.d("FP", "FoodProfile before navcontoller")
+                FoodProfileScreen(foodName = foodName, viewModel = FoodViewModel())
+
+            }
+
+
         }
     }
 }

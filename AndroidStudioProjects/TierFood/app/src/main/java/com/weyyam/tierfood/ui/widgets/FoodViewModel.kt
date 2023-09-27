@@ -13,6 +13,7 @@ class FoodViewModel : ViewModel() {
 
     var foodList by mutableStateOf<List<FoodItem>?>(null)
     var category by mutableStateOf<String?>(null)
+    var selectedFood by mutableStateOf<FoodItem?>(null)
 
     init {
         fetchFoodsForCategory(category)
@@ -34,6 +35,19 @@ class FoodViewModel : ViewModel() {
                 Log.d("db", "error using fetchFoodsForCategory $category $exception")
             }
         )
+    }
+
+    fun getFoodByName(name: String): FoodItem? {
+        dataManager.fetchFoodByName(
+            name = name,
+            success = { food ->
+                selectedFood = food
+            },
+            failure = {exception ->
+                Log.d("FoodById", "Failed to get food by name $exception")
+            }
+        )
+        return selectedFood
     }
 
 }

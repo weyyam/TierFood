@@ -48,3 +48,32 @@ fun TierBoxFoodList(tier: String){
             fontWeight = FontWeight.Bold)
     }
 }
+
+@Composable
+fun TierBoxFoodProfile(tier: String){
+
+
+    val tierRank = tierMap[tier] ?: error("String to tier invalid $tier")
+
+    val tierMap = mapOf(
+        "S" to s_rank,
+        "A" to a_rank,
+        "B" to b_rank,
+        "C" to c_rank,
+        "D" to d_rank,
+        "F" to f_rank
+    )
+
+    Box(
+        modifier = Modifier
+            .padding(8.dp)
+            .size(75.dp)
+            .clip(RoundedCornerShape(15))
+            .background(colorResource(id = tierRank.color)),
+        contentAlignment = Alignment.Center){
+        Text(
+            text = tierRank.letter,
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold)
+    }
+}

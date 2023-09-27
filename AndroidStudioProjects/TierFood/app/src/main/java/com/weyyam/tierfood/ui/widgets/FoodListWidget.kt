@@ -3,6 +3,7 @@ package com.weyyam.tierfood.ui.widgets
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -29,14 +30,16 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.weyyam.tierfood.R
 import com.weyyam.tierfood.data.FoodItem
+import com.weyyam.tierfood.navigation.FoodProfile
 
 
 @Composable
-fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String){
+fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String, navController: NavController){
     /**
      * This is the List for FoodItems when the category is selected
      * @param viewModel The Viewmodel is responsible for managing and providing food
@@ -56,7 +59,14 @@ fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String){
             modifier = Modifier.padding(8.dp)
                 ){
             items(foodList) { food ->
-                FoodItemRow(food)
+                FoodItemRow(
+                    food = food,
+                    onClick = {selectedFood ->
+                        Log.i("FP", "The foodprofile/food.id is:${FoodProfile.route}/${selectedFood.name}")
+                        navController.navigate("${FoodProfile.route}/${selectedFood.name}")
+                        Log.i("FP", "navController.navigate ran successfully ")
+                    }
+                )
                 Spacer(modifier = Modifier.padding(4.dp))
                 Divider(color = colorResource(id = R.color.background_PrimaryD))
                 Spacer(modifier = Modifier.padding(4.dp))
@@ -71,13 +81,14 @@ fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String){
 
 
 @Composable
-fun FoodItemRow(food: FoodItem){
+fun FoodItemRow(food: FoodItem, onClick: (FoodItem) -> Unit){
     /*
     this is used to make the row for each individual food,
-    this needs to be made to look pretty before finish
      */
     Box(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick(food)}
     ){
         Row(modifier = Modifier
             .fillMaxWidth()
@@ -122,5 +133,5 @@ fun NetworkImage(url: String){
 @Composable
 @Preview(showBackground = true)
 fun PreviewFoodItemRow(){
-    FoodItemRow(food = FoodItem(id = "0", name = "Bluebarries", description = "This is the description", tier = "B", type = "Fruits", imageURL = "https://firebasestorage.googleapis.com/v0/b/tierfood-d1dd0.appspot.com/o/BlueBerries_image.png?alt=media&token=4b532482-fabd-47dc-84ad-8c8e9d3112b6"))
+    //FoodItemRow(food = FoodItem(id = "0", name = "Bluebarries", description = "This is the description", tier = "B", type = "Fruits", imageURL = "https://firebasestorage.googleapis.com/v0/b/tierfood-d1dd0.appspot.com/o/BlueBerries_image.png?alt=media&token=4b532482-fabd-47dc-84ad-8c8e9d3112b6"))
 }
