@@ -44,7 +44,20 @@ class FoodViewModel : ViewModel() {
                 selectedFood = food
             },
             failure = {exception ->
-                Log.d("FoodById", "Failed to get food by name $exception")
+                Log.d("FoodByName", "Failed to get food by name $exception")
+            }
+        )
+        return selectedFood
+    }
+
+    fun getFoodById(Id: String): FoodItem?{
+        dataManager.fetchFoodById(
+            documentId = Id,
+            success = {food ->
+                selectedFood = food
+            },
+            failure = {exception ->
+                Log.e("FoodById", "failed to get food by Id $exception")
             }
         )
         return selectedFood

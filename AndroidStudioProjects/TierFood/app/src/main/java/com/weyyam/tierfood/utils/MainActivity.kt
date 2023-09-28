@@ -42,23 +42,24 @@ import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
-    private val googleAuthUiClient by lazy {
-        GoogleAuthUiClient(
-            context = applicationContext,
-            oneTapClient = Identity.getSignInClient(applicationContext),
-            initializeFavorites = ::initializeUserFavorites
-        )
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+         val localGoogleAuthUiClient = GoogleAuthUiClient(
+                context = applicationContext,
+                oneTapClient = Identity.getSignInClient(applicationContext),
+                initializeFavorites = ::initializeUserFavorites
+            )
+
         setContent {
             TierFoodTheme {
-                MyNavigation()
+                MyNavigation(localGoogleAuthUiClient)
 
             }
         }
     }
+
+
 
     private fun initializeUserFavorites(userId: String){
         val userFavoritesManager = UserFavoritesManager(userId)
@@ -66,10 +67,20 @@ class MainActivity : ComponentActivity() {
     }
 
 
+
     @Composable
-    fun MyNavigation(){
+    fun MyNavigation(googleAuthUiClient: GoogleAuthUiClient){
 
         val navController = rememberNavController()
+
+        val currentUser = googleAuthUiClient.getSignedInUser()
+        val userFavoritesManager = if (currentUser != null){
+            UserFavoritesManager(currentUser.userId).also {
+                it.initializeUserFavorites()
+            }
+        } else {
+            null
+        }
 
         NavHost(navController = navController, startDestination = Register.route){
 
@@ -178,11 +189,14 @@ class MainActivity : ComponentActivity() {
             }
 
 
-            composable("${FoodProfile.route}/{name}"){ navBackStackEntry ->
+            composable("${FoodProfile.route}/{Id}"){ navBackStackEntry ->
                 Log.d("FP", FoodProfile.route)
-                val foodName = navBackStackEntry.arguments?.getString("name") ?: return@composable
+                val foodId = navBackStackEntry.arguments?.getString("Id") ?: return@composable
                 Log.d("FP", "FoodProfile before navcontoller")
-                FoodProfileScreen(foodName = foodName, viewModel = FoodViewModel())
+                Log.i("TESTING", "The foodId before launching the FoodProfileScreen is $foodId")
+                if (userFavoritesManager != null) {
+                    FoodProfileScreen(foodId = foodId, userFavoritesManager = userFavoritesManager,viewModel = FoodViewModel())
+                }
 
             }
 

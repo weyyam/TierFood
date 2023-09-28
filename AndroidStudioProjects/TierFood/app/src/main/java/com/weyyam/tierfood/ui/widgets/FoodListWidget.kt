@@ -62,8 +62,8 @@ fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String, na
                 FoodItemRow(
                     food = food,
                     onClick = {selectedFood ->
-                        Log.i("FP", "The foodprofile/food.id is:${FoodProfile.route}/${selectedFood.name}")
-                        navController.navigate("${FoodProfile.route}/${selectedFood.name}")
+                        Log.i("FP", "The foodprofile/food.id is:${FoodProfile.route}/${selectedFood.id}")
+                        navController.navigate("${FoodProfile.route}/${selectedFood.id}")
                         Log.i("FP", "navController.navigate ran successfully ")
                     }
                 )

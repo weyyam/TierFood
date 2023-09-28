@@ -43,9 +43,13 @@ import com.weyyam.tierfood.ui.favorite.UserFavoritesManager
 import com.weyyam.tierfood.ui.navbars.TopBarAppView
 
 @Composable
-fun FoodProfileScreen(foodName: String, viewModel: FoodViewModel = viewModel()) {
-    Log.i("TESTING", "made it to the foodProfileScreen fun with ($foodName) as the food name variable ")
-    val foodItem = viewModel.getFoodByName(foodName)
+fun FoodProfileScreen(foodId: String, userFavoritesManager: UserFavoritesManager,viewModel: FoodViewModel = viewModel()) {
+    Log.i("TESTING", "made it to the foodProfileScreen fun with ($foodId) as the food name variable ")
+    val foodItem = viewModel.getFoodById(foodId)
+    Log.i("TESTING", "food item is :$foodItem")
+    Log.i("TESTING", "food id is :$foodId")
+
+
 
     val painter = rememberAsyncImagePainter(
         ImageRequest
@@ -95,7 +99,7 @@ fun FoodProfileScreen(foodName: String, viewModel: FoodViewModel = viewModel()) 
                 )
             }
             Box(modifier = Modifier.padding(8.dp)){
-                ClickableStar(foodId = foodId, userFavoritesManager = )
+                ClickableStar(foodId = foodId, userFavoritesManager = userFavoritesManager)
 
             }
 
@@ -167,5 +171,5 @@ fun ClickableStar(
 @Composable
 @Preview(showBackground = true)
 fun PreviewFoodProfileScreen(){
-    FoodProfileScreen(foodName = "Blueberry")
+    //FoodProfileScreen(foodId = "Blueberry")
 }
