@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,6 +39,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.weyyam.tierfood.R
+import com.weyyam.tierfood.ui.favorite.UserFavoritesManager
 import com.weyyam.tierfood.ui.navbars.TopBarAppView
 
 @Composable
@@ -93,7 +95,7 @@ fun FoodProfileScreen(foodName: String, viewModel: FoodViewModel = viewModel()) 
                 )
             }
             Box(modifier = Modifier.padding(8.dp)){
-                ClickableStar()
+                ClickableStar(foodId = foodId, userFavoritesManager = )
 
             }
 
@@ -133,14 +135,30 @@ fun FoodProfileScreen(foodName: String, viewModel: FoodViewModel = viewModel()) 
 
 
 @Composable
-fun ClickableStar(){
-    var isStarFilled by remember { mutableStateOf(false) }
-    
+fun ClickableStar(
+    foodId: String,
+    userFavoritesManager: UserFavoritesManager
+){
+    var isFavorited by remember { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = foodId){
+        userFavoritesManager.isFavorited(foodId){ result ->
+            isFavorited = result
+        }
+    }
+
     Icon(
-        painter = painterResource(id = if (isStarFilled) R.drawable.ic_star_filled else R.drawable.ic_star_outline),
+        painter = painterResource(
+            id = if (isFavorited) R.drawable.ic_star_filled else R.drawable.ic_star_outline),
         contentDescription = "Star Icon",
         modifier = Modifier.clickable {
-            isStarFilled = !isStarFilled
+
+            isFavorited = !isFavorited
+            if (isFavorited){
+                userFavoritesManager.addFavorites(foodId, onSuccess = {}, onFailure = {})
+            } else {
+                userFavoritesManager.removeFavorites(foodId, onSuccess = {}, onFailure = {})
+            }
         },
         tint = Color.Unspecified)
 }

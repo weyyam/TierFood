@@ -32,6 +32,7 @@ import com.weyyam.tierfood.screens.RegisterScreen
 import com.weyyam.tierfood.screens.SearchScreen
 import com.weyyam.tierfood.sign_in.GoogleAuthUiClient
 import com.weyyam.tierfood.sign_in.SignInViewModel
+import com.weyyam.tierfood.ui.favorite.UserFavoritesManager
 import com.weyyam.tierfood.ui.theme.TierFoodTheme
 import com.weyyam.tierfood.ui.widgets.FoodProfileScreen
 import com.weyyam.tierfood.ui.widgets.FoodViewModel
@@ -44,7 +45,8 @@ class MainActivity : ComponentActivity() {
     private val googleAuthUiClient by lazy {
         GoogleAuthUiClient(
             context = applicationContext,
-            oneTapClient = Identity.getSignInClient(applicationContext)
+            oneTapClient = Identity.getSignInClient(applicationContext),
+            initializeFavorites = ::initializeUserFavorites
         )
     }
 
@@ -57,6 +59,13 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    private fun initializeUserFavorites(userId: String){
+        val userFavoritesManager = UserFavoritesManager(userId)
+        userFavoritesManager.initializeUserFavorites()
+    }
+
+
     @Composable
     fun MyNavigation(){
 

@@ -14,10 +14,12 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import java.util.concurrent.CancellationException
+import com.weyyam.tierfood.ui.favorite.UserFavoritesManager
 
 class GoogleAuthUiClient (
     private val context: Context,
-    private val oneTapClient: SignInClient
+    private val oneTapClient: SignInClient,
+    private val initializeFavorites: (String) -> Unit
     ){
     val WEB_CLIENT_ID: String = "768752322941-hmfr0au0rtnvmq8ujkc0el2imjejtjuq.apps.googleusercontent.com"
 
@@ -42,6 +44,10 @@ class GoogleAuthUiClient (
         val googleCredentials = GoogleAuthProvider.getCredential(googleIdToken, null)
         return try {
             val user = auth.signInWithCredential(googleCredentials).await().user
+            if(user != null){
+                initializeFavorites(user.uid)
+            }
+
             SignInResult(
                 data = user?.run{
                     UserData(
