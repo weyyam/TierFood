@@ -1,14 +1,24 @@
 package com.weyyam.tierfood.data
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
+import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.weyyam.tierfood.data.FirestoreManager.db
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.tasks.await
+import kotlin.Result
 
 
 /**
  * manager responsible for fetching food data
  */
 class DataManager {
+
+
+    private val db = FirebaseFirestore.getInstance()
+    private val userFavoritesRef = db.collection("userFavorites").document()
 
     /**
      * Fetches all food Items
@@ -108,6 +118,53 @@ class DataManager {
             }
     }
 
+    enum class LoadingState{
+        LOADING, SUCCESS, ERROR
+    }
+
+    fun fetchFavoriteFoods(userId: String, success: (List<FoodItem>) -> Unit, failure: (Exception) -> Unit){
+
+        Log.i("FFF", "fetchFavoriteFoods datamanager fun started")
+
+        // Directly fetch the favorites using the userId
+        val userFavoritesRef = db.collection("userFavorites").document(userId)
+        Log.i("FFF", "userFavoritesRef are as follows: $userFavoritesRef")
+        userFavoritesRef.get()
+            .addOnSuccessListener { favoritesSnapshot ->
+                val favoriteFoodIds = favoritesSnapshot.get("favorites") as? List<String> ?: listOf()
+                Log.i("FFF", "Fetched favorite food IDs: $favoriteFoodIds")
+
+                if(favoriteFoodIds.isEmpty()){
+                    Log.i("FFF", "No favorite foods for user:$userId")
+                    success(emptyList())
+                    return@addOnSuccessListener
+                }
+
+                val foodRef = db.collection("foods")
+                foodRef.whereIn(FieldPath.documentId(), favoriteFoodIds).get()
+                    .addOnSuccessListener { foodSnapshot ->
+                        val favoriteFoods = foodSnapshot.documents.map { document ->
+                            FoodItem(
+                                document.id,
+                                document.data?.get("name") as String,
+                                document.data?.get("description") as String,
+                                document.data?.get("tier") as String,
+                                document.data?.get("imageURL") as String,
+                                document.data?.get("type") as String)
+                        }
+                        Log.i("FFF", "Fetched favorite foods: $favoriteFoods")
+                        success(favoriteFoods)
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.e("FFF", "failure in foodFetch $exception")
+                        failure(exception)
+                    }
+            }
+            .addOnFailureListener{exception ->
+                Log.e("FFF", "failure in foodFetch $exception")
+                failure(exception)
+            }
+    }
     private fun QueryDocumentSnapshot.toFoodItem(): FoodItem {
         return FoodItem(
             id = id,

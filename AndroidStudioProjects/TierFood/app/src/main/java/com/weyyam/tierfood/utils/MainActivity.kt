@@ -154,7 +154,9 @@ class MainActivity : ComponentActivity() {
 
             }
             composable(Home.route){
-                HomeScreen(navController)
+                if (currentUser != null) {
+                    HomeScreen(navController, userId = currentUser.userId)
+                }
             }
             composable(Profile.route){
                 ProfileScreen(
