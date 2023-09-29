@@ -6,10 +6,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -36,6 +34,7 @@ import coil.request.ImageRequest
 import com.weyyam.tierfood.R
 import com.weyyam.tierfood.data.FoodItem
 import com.weyyam.tierfood.navigation.FoodProfile
+import com.weyyam.tierfood.viewmodels.FoodViewModel
 
 
 @Composable

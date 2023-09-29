@@ -41,6 +41,7 @@ import coil.request.ImageRequest
 import com.weyyam.tierfood.R
 import com.weyyam.tierfood.ui.favorite.UserFavoritesManager
 import com.weyyam.tierfood.ui.navbars.TopBarAppView
+import com.weyyam.tierfood.viewmodels.FoodViewModel
 
 @Composable
 fun FoodProfileScreen(foodId: String, userFavoritesManager: UserFavoritesManager,viewModel: FoodViewModel = viewModel()) {

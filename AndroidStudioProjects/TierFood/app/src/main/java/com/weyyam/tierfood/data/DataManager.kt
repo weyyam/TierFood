@@ -1,14 +1,9 @@
 package com.weyyam.tierfood.data
 
 import android.util.Log
-import androidx.compose.runtime.mutableStateOf
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
-import com.weyyam.tierfood.data.FirestoreManager.db
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.tasks.await
-import kotlin.Result
 
 
 /**

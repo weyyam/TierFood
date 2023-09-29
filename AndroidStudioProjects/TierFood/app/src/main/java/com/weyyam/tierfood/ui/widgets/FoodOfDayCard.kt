@@ -15,11 +15,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,7 +29,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.weyyam.tierfood.R
-import com.weyyam.tierfood.data.DataManager
 import com.weyyam.tierfood.data.FoodItem
 import com.weyyam.tierfood.model.a_rank
 import com.weyyam.tierfood.model.b_rank
@@ -42,9 +36,7 @@ import com.weyyam.tierfood.model.c_rank
 import com.weyyam.tierfood.model.d_rank
 import com.weyyam.tierfood.model.f_rank
 import com.weyyam.tierfood.model.s_rank
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import com.weyyam.tierfood.viewmodels.FoodOfDayViewModel
 
 
 @Composable

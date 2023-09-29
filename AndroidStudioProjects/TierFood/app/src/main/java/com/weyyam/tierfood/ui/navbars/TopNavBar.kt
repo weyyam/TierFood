@@ -31,14 +31,6 @@ fun TopBarAppView(navController: NavController){
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
     ){
-        Image(
-            painter = painterResource(id = R.drawable.round_keyboard_arrow_left_24),
-            contentDescription = "Back arrow",
-            alignment = Alignment.Center,
-            modifier = Modifier
-                .clickable { navController.navigate(Home.route) }
-                .size(36.dp),
-            contentScale = ContentScale.Fit)
 
         Image(
             painter = painterResource(id = R.drawable.twotone_logo_dev_24),

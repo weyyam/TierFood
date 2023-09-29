@@ -15,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -35,7 +34,7 @@ import com.weyyam.tierfood.sign_in.SignInViewModel
 import com.weyyam.tierfood.ui.favorite.UserFavoritesManager
 import com.weyyam.tierfood.ui.theme.TierFoodTheme
 import com.weyyam.tierfood.ui.widgets.FoodProfileScreen
-import com.weyyam.tierfood.ui.widgets.FoodViewModel
+import com.weyyam.tierfood.viewmodels.FoodViewModel
 import com.weyyam.tierfood.ui.widgets.FoodsListScreen
 import kotlinx.coroutines.launch
 

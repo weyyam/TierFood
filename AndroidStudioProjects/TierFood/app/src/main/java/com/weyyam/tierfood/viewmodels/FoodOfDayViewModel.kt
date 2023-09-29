@@ -1,4 +1,4 @@
-package com.weyyam.tierfood.ui.widgets
+package com.weyyam.tierfood.viewmodels
 
 import android.util.Log
 import androidx.compose.runtime.getValue

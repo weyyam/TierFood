@@ -23,7 +23,7 @@ import com.weyyam.tierfood.data.DataManager
 import com.weyyam.tierfood.ui.navbars.BottomBarAppView
 import com.weyyam.tierfood.ui.navbars.TopBarAppView
 import com.weyyam.tierfood.ui.widgets.FoodOfDayCard
-import com.weyyam.tierfood.ui.widgets.HomeViewModel
+import com.weyyam.tierfood.viewmodels.HomeViewModel
 import com.weyyam.tierfood.ui.widgets.TiersColumn
 
 
