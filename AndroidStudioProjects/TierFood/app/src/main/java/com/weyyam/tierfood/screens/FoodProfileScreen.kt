@@ -1,4 +1,4 @@
-package com.weyyam.tierfood.ui.widgets
+package com.weyyam.tierfood.screens
 
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,16 +36,54 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.weyyam.tierfood.R
+import com.weyyam.tierfood.navigation.Profile
 import com.weyyam.tierfood.ui.favorite.UserFavoritesManager
 import com.weyyam.tierfood.ui.navbars.TopBarAppView
+import com.weyyam.tierfood.ui.widgets.TierBoxFoodProfile
 import com.weyyam.tierfood.viewmodels.FoodViewModel
 
 @Composable
-fun FoodProfileScreen(foodId: String, userFavoritesManager: UserFavoritesManager,viewModel: FoodViewModel = viewModel()) {
+fun ClickableStar(
+    foodId: String,
+    userFavoritesManager: UserFavoritesManager
+){
+    var isFavorited by remember { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = foodId){
+        userFavoritesManager.isFavorited(foodId){ result ->
+            isFavorited = result
+        }
+    }
+
+    Icon(
+        painter = painterResource(
+            id = if (isFavorited) R.drawable.ic_star_filled else R.drawable.ic_star_outline),
+        contentDescription = "Star Icon",
+        modifier = Modifier.clickable {
+
+            isFavorited = !isFavorited
+            if (isFavorited){
+                userFavoritesManager.addFavorites(foodId, onSuccess = {}, onFailure = {})
+            } else {
+                userFavoritesManager.removeFavorites(foodId, onSuccess = {}, onFailure = {})
+            }
+        },
+        tint = Color.Unspecified)
+}
+
+
+
+@Composable
+fun FoodProfileScreen(
+    navController: NavController,
+    foodId: String,
+    userFavoritesManager: UserFavoritesManager,
+    viewModel: FoodViewModel = viewModel()) {
     Log.i("TESTING", "made it to the foodProfileScreen fun with ($foodId) as the food name variable ")
     val foodItem = viewModel.getFoodById(foodId)
     Log.i("TESTING", "food item is :$foodItem")
@@ -69,10 +108,11 @@ fun FoodProfileScreen(foodId: String, userFavoritesManager: UserFavoritesManager
                 color = colorResource(id = R.color.background_SecondaryL)
             )
     ) {
-        TopBarAppView(navController = rememberNavController())
+        TopBarAppView(navController = navController)
         /**
          * FoodImage,name,star,tier top Row
          */
+
 
         Row(
             modifier = Modifier
@@ -138,39 +178,3 @@ fun FoodProfileScreen(foodId: String, userFavoritesManager: UserFavoritesManager
 }
 
 
-
-@Composable
-fun ClickableStar(
-    foodId: String,
-    userFavoritesManager: UserFavoritesManager
-){
-    var isFavorited by remember { mutableStateOf(false) }
-
-    LaunchedEffect(key1 = foodId){
-        userFavoritesManager.isFavorited(foodId){ result ->
-            isFavorited = result
-        }
-    }
-
-    Icon(
-        painter = painterResource(
-            id = if (isFavorited) R.drawable.ic_star_filled else R.drawable.ic_star_outline),
-        contentDescription = "Star Icon",
-        modifier = Modifier.clickable {
-
-            isFavorited = !isFavorited
-            if (isFavorited){
-                userFavoritesManager.addFavorites(foodId, onSuccess = {}, onFailure = {})
-            } else {
-                userFavoritesManager.removeFavorites(foodId, onSuccess = {}, onFailure = {})
-            }
-        },
-        tint = Color.Unspecified)
-}
-
-
-@Composable
-@Preview(showBackground = true)
-fun PreviewFoodProfileScreen(){
-    //FoodProfileScreen(foodId = "Blueberry")
-}

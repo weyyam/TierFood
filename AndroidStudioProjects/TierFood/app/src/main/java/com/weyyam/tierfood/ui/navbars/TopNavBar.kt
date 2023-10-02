@@ -1,5 +1,6 @@
 package com.weyyam.tierfood.ui.navbars
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -44,7 +45,15 @@ fun TopBarAppView(navController: NavController){
             contentDescription = "Temp holding of profile image while we wait for profile image to be added",
             alignment = Alignment.Center,
             modifier = Modifier
-                .clickable { navController.navigate(Profile.route) }
+                .clickable {
+                    if(navController.currentDestination != null){
+                        navController.navigate(Profile.route)
+                    } else {
+                        Log.d("NAV", "NavController.currentDestination fail because of null")
+                    }
+
+
+                }
                 .size(36.dp),
             contentScale = ContentScale.Fit)
     }

@@ -33,7 +33,7 @@ import com.weyyam.tierfood.sign_in.GoogleAuthUiClient
 import com.weyyam.tierfood.sign_in.SignInViewModel
 import com.weyyam.tierfood.ui.favorite.UserFavoritesManager
 import com.weyyam.tierfood.ui.theme.TierFoodTheme
-import com.weyyam.tierfood.ui.widgets.FoodProfileScreen
+import com.weyyam.tierfood.screens.FoodProfileScreen
 import com.weyyam.tierfood.viewmodels.FoodViewModel
 import com.weyyam.tierfood.ui.widgets.FoodsListScreen
 import kotlinx.coroutines.launch
@@ -196,7 +196,7 @@ class MainActivity : ComponentActivity() {
                 Log.d("FP", "FoodProfile before navcontoller")
                 Log.i("TESTING", "The foodId before launching the FoodProfileScreen is $foodId")
                 if (userFavoritesManager != null) {
-                    FoodProfileScreen(foodId = foodId, userFavoritesManager = userFavoritesManager,viewModel = FoodViewModel())
+                    FoodProfileScreen(navController = navController, foodId = foodId, userFavoritesManager = userFavoritesManager,viewModel = FoodViewModel())
                 }
 
             }

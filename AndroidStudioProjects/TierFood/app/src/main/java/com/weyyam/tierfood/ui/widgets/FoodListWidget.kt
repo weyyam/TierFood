@@ -48,10 +48,11 @@ fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String, na
     viewModel.fetchFoodsForCategory(category)
     val foodList = viewModel.foodList
     Log.d("FL","FoodsListScreen runs after composeable calls ")
+
     Box(modifier = Modifier
         .fillMaxSize()
         .background(colorResource(id = R.color.background_SecondaryL))) {
-        
+
     }
     if (foodList != null) {
         LazyColumn (
