@@ -152,6 +152,10 @@ class DataManager {
                 failure(exception)
             }
     }
+
+
+
+
     @Suppress("UNCHECKED_CAST")
     private fun QueryDocumentSnapshot.toFoodItem(): FoodItem {
         return FoodItem(

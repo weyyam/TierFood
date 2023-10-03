@@ -1,12 +1,18 @@
 package com.weyyam.tierfood.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -25,34 +31,45 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.weyyam.tierfood.R
 import com.weyyam.tierfood.ui.navbars.BottomBarAppView
 import com.weyyam.tierfood.ui.navbars.TopBarAppView
 import com.weyyam.tierfood.ui.widgets.FoodCategoriesGrid
+import com.weyyam.tierfood.ui.widgets.NetworkImage
+import com.weyyam.tierfood.ui.widgets.TierBoxFoodList
+import com.weyyam.tierfood.viewmodels.FoodViewModel
 
 
 @Composable
 fun SearchScreen(navController: NavController) {
-
-    Column(modifier = Modifier.fillMaxSize()) {
+    var query by remember { mutableStateOf("")}
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(colorResource(id = R.color.background_SecondaryL))) {
         TopBarAppView(navController = navController)
         Box(modifier = Modifier.weight(1f)
         ) {
             Column(modifier = Modifier
                 .fillMaxSize()
-                .background(colorResource(id = R.color.background_SecondaryL)))
+                )
             {
-                SearchBar()
-                FoodCategoriesGrid(navController = navController)
-                Spacer(modifier = Modifier.weight(1f))
-                BottomBarAppView(navController = navController)
+                SearchBar(query = query, onQueryChanged = {query = it})
+                if(query.isNotEmpty()){
+                    ListOfSearchedFoods(query = query)
+                } else {
+                    FoodCategoriesGrid(navController = navController)
+                }
+
             }
         }
+        Spacer(modifier = Modifier.weight(0.005f))
+        BottomBarAppView(navController = navController)
     }
 
 }
@@ -60,15 +77,15 @@ fun SearchScreen(navController: NavController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchBar(){
+fun SearchBar(query: String, onQueryChanged: (String) -> Unit){
     Box(
         modifier = Modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center
     ){
-        var query by remember { mutableStateOf("")}
+
         TextField(
             value = query,
-            onValueChange = {query = it},
+            onValueChange = onQueryChanged,
             leadingIcon = {
                 Icon(Icons.Default.Search,
                     contentDescription = "Search Icon")
@@ -88,6 +105,41 @@ fun SearchBar(){
 
 
 
+    }
+}
+
+
+@Composable
+fun ListOfSearchedFoods(viewModel: FoodViewModel = viewModel(), query: String){
+
+
+    viewModel.fetchAllFoodsFromDataManager()
+    val allFoods = viewModel.allFoods.value
+    val filteredFoods = allFoods?.filter { it.name.contains(query, ignoreCase = true)}
+
+    LazyColumn{
+        items(items = filteredFoods ?: listOf(), key = {food -> food.id}) {food ->
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+            ){
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically) {
+
+                    NetworkImage(url = food.imageURL)
+                    Text(
+                        text = food.name,
+                        fontWeight = FontWeight.SemiBold)
+                    TierBoxFoodList(tier = food.tier)
+                }
+
+
+            }
+        }
     }
 }
 
