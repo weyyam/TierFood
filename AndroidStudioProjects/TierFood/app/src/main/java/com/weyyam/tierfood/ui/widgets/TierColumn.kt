@@ -2,6 +2,7 @@ package com.weyyam.tierfood.ui.widgets
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.weyyam.tierfood.R
@@ -36,9 +38,10 @@ import com.weyyam.tierfood.model.c_rank
 import com.weyyam.tierfood.model.d_rank
 import com.weyyam.tierfood.model.f_rank
 import com.weyyam.tierfood.model.s_rank
+import com.weyyam.tierfood.navigation.FoodProfile
 
 @Composable
-fun TierRow(tier: Tier, foods: List<FoodItem>){
+fun TierRow(tier: Tier, foods: List<FoodItem>, onClick: (FoodItem) -> Unit){
     Row(modifier = Modifier
         .fillMaxWidth()
         .height(75.dp)
@@ -78,7 +81,8 @@ fun TierRow(tier: Tier, foods: List<FoodItem>){
                     modifier = Modifier
                         .size(65.dp)
                         .padding(4.dp)
-                        .clip(RoundedCornerShape(15)))
+                        .clip(RoundedCornerShape(15))
+                        .clickable { onClick(food) })
 
             }
         }
@@ -88,7 +92,7 @@ fun TierRow(tier: Tier, foods: List<FoodItem>){
 }
 
 @Composable
-fun TiersColumn(favoriteFoods: List<FoodItem>){
+fun TiersColumn(favoriteFoods: List<FoodItem>, navController: NavController){
 
     val sRankFoods = favoriteFoods.filter { it.tier == "S" }
     val aRankFoods = favoriteFoods.filter { it.tier == "A" }
@@ -98,12 +102,24 @@ fun TiersColumn(favoriteFoods: List<FoodItem>){
     val fRankFoods = favoriteFoods.filter { it.tier == "F" }
 
     Column() {
-        TierRow(tier = s_rank, foods = sRankFoods)
-        TierRow(tier = a_rank, foods = aRankFoods)
-        TierRow(tier = b_rank, foods = bRankFoods)
-        TierRow(tier = c_rank, foods = cRankFoods)
-        TierRow(tier = d_rank, foods = dRankFoods)
-        TierRow(tier = f_rank, foods = fRankFoods)
+        TierRow(tier = s_rank, foods = sRankFoods, onClick = {selectedFood ->
+            navController.navigate("${FoodProfile.route}/${selectedFood.id}")
+        })
+        TierRow(tier = a_rank, foods = aRankFoods, onClick = {selectedFood ->
+            navController.navigate("${FoodProfile.route}/${selectedFood.id}")
+        })
+        TierRow(tier = b_rank, foods = bRankFoods, onClick = {selectedFood ->
+            navController.navigate("${FoodProfile.route}/${selectedFood.id}")
+        })
+        TierRow(tier = c_rank, foods = cRankFoods, onClick = {selectedFood ->
+            navController.navigate("${FoodProfile.route}/${selectedFood.id}")
+        })
+        TierRow(tier = d_rank, foods = dRankFoods, onClick = {selectedFood ->
+            navController.navigate("${FoodProfile.route}/${selectedFood.id}")
+        })
+        TierRow(tier = f_rank, foods = fRankFoods, onClick = {selectedFood ->
+            navController.navigate("${FoodProfile.route}/${selectedFood.id}")
+        })
     }
 
 }

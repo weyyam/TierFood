@@ -38,6 +38,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.weyyam.tierfood.R
+import com.weyyam.tierfood.data.FoodItem
+import com.weyyam.tierfood.navigation.FoodProfile
 import com.weyyam.tierfood.ui.navbars.BottomBarAppView
 import com.weyyam.tierfood.ui.navbars.TopBarAppView
 import com.weyyam.tierfood.ui.widgets.FoodCategoriesGrid
@@ -61,7 +63,11 @@ fun SearchScreen(navController: NavController) {
             {
                 SearchBar(query = query, onQueryChanged = {query = it})
                 if(query.isNotEmpty()){
-                    ListOfSearchedFoods(query = query)
+                    ListOfSearchedFoods(
+                        query = query,
+                        onClick = { selectedFood ->
+                        navController.navigate("${FoodProfile.route}/${selectedFood.id}")
+                    })
                 } else {
                     FoodCategoriesGrid(navController = navController)
                 }
@@ -110,7 +116,7 @@ fun SearchBar(query: String, onQueryChanged: (String) -> Unit){
 
 
 @Composable
-fun ListOfSearchedFoods(viewModel: FoodViewModel = viewModel(), query: String){
+fun ListOfSearchedFoods(viewModel: FoodViewModel = viewModel(), query: String, onClick: (FoodItem) -> Unit){
 
 
     viewModel.fetchAllFoodsFromDataManager()
@@ -123,6 +129,7 @@ fun ListOfSearchedFoods(viewModel: FoodViewModel = viewModel(), query: String){
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .clickable { onClick(food) }
             ){
                 Row(modifier = Modifier
                     .fillMaxWidth()

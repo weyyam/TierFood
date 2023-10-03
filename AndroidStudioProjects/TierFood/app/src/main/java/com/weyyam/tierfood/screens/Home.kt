@@ -67,7 +67,7 @@ fun HomeScreen(navController: NavController, userId : String){
                                 .background(colorResource(id = R.color.background_PrimaryD)),
                             textAlign = TextAlign.Center
                         )
-                        TiersColumn(favoriteFoods)
+                        TiersColumn(favoriteFoods, navController = navController)
                         Spacer(modifier = Modifier.weight(1f))
                         BottomBarAppView(navController = navController)
                     }
