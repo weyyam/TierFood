@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.weyyam.tierfood.R
 import com.weyyam.tierfood.data.DataManager
@@ -28,7 +29,7 @@ import com.weyyam.tierfood.ui.widgets.TiersColumn
 
 
 @Composable
-fun HomeScreen(navController: NavHostController, userId : String){
+fun HomeScreen(navController: NavController, userId : String){
 
     val viewModel: HomeViewModel = viewModel()
     val favoriteFoods by viewModel.favoriteFoods.collectAsState()
@@ -58,6 +59,7 @@ fun HomeScreen(navController: NavHostController, userId : String){
                     }
 
                     DataManager.LoadingState.SUCCESS -> {
+                        Log.d("FFF", "Loading state success ")
                         Text(
                             text = "These are your saved Foods!",
                             modifier = Modifier

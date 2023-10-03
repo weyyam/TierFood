@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -43,6 +44,7 @@ import coil.request.ImageRequest
 import com.weyyam.tierfood.R
 import com.weyyam.tierfood.navigation.Profile
 import com.weyyam.tierfood.ui.favorite.UserFavoritesManager
+import com.weyyam.tierfood.ui.navbars.BottomBarAppView
 import com.weyyam.tierfood.ui.navbars.TopBarAppView
 import com.weyyam.tierfood.ui.widgets.TierBoxFoodProfile
 import com.weyyam.tierfood.viewmodels.FoodViewModel
@@ -84,12 +86,10 @@ fun FoodProfileScreen(
     foodId: String,
     userFavoritesManager: UserFavoritesManager,
     viewModel: FoodViewModel = viewModel()) {
-    Log.i("TESTING", "made it to the foodProfileScreen fun with ($foodId) as the food name variable ")
+
+
     val foodItem = viewModel.getFoodById(foodId)
-    Log.i("TESTING", "food item is :$foodItem")
-    Log.i("TESTING", "food id is :$foodId")
-
-
+    Log.i("FPS", "FoodProfileScreen Composable has run with the food item ${foodItem}")
 
     val painter = rememberAsyncImagePainter(
         ImageRequest
@@ -173,8 +173,82 @@ fun FoodProfileScreen(
                 )
             }
         }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(0.5f)
+                    .padding(horizontal = 8.dp)
+                    .border(
+                        width = 1.dp,
+                        color = colorResource(id = R.color.black),
+                        shape = RoundedCornerShape(15)
+                    )) {
+                Column(modifier = Modifier.padding(4.dp)) {
+                    Text(
+                        text = "Macros:",
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(4.dp)
+                    )
+                    if (foodItem != null) {
+                        DisplayMapDataMacro(foodItem.macros)
+                    }
+                }
+
+
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp)
+                    .border(
+                        width = 1.dp,
+                        color = colorResource(id = R.color.black),
+                        shape = RoundedCornerShape(15)
+                    )) {
+                Column (modifier = Modifier.padding(4.dp)){
+                    Text(
+                        text = "Micros:",
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(4.dp)
+                    )
+                    if (foodItem != null) {
+                        DisplayMapDataMicro(foodItem.micros)
+                    }
+                }
+
+            }
+        }
+        Spacer(modifier = Modifier.weight(1f))
+        BottomBarAppView(navController = navController)
     }
 
+}
+
+
+@Composable
+fun DisplayMapDataMacro(mapData: Map<String, Double>?){
+    Column {
+        mapData?.forEach { (key, value) ->
+            Text(
+                text = "$key: ${value}g",
+                modifier = Modifier.padding(4.dp))
+        }
+    }
+}
+
+@Composable
+fun DisplayMapDataMicro(mapData: Map<String, Double>?){
+    Column {
+        mapData?.forEach { (key, value) ->
+            Text(
+                text = "$key: ${value}%",
+                modifier = Modifier.padding(4.dp))
+        }
+    }
 }
 
 

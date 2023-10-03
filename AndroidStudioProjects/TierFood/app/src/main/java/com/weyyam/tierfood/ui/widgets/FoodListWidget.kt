@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,11 +35,13 @@ import coil.request.ImageRequest
 import com.weyyam.tierfood.R
 import com.weyyam.tierfood.data.FoodItem
 import com.weyyam.tierfood.navigation.FoodProfile
+import com.weyyam.tierfood.ui.navbars.BottomBarAppView
+import com.weyyam.tierfood.ui.navbars.TopBarAppView
 import com.weyyam.tierfood.viewmodels.FoodViewModel
 
 
 @Composable
-fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String, navController: NavController){
+fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String, navController: NavController) {
     /**
      * This is the List for FoodItems when the category is selected
      * @param viewModel The Viewmodel is responsible for managing and providing food
@@ -47,36 +50,54 @@ fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String, na
      */
     viewModel.fetchFoodsForCategory(category)
     val foodList = viewModel.foodList
-    Log.d("FL","FoodsListScreen runs after composeable calls ")
+    Log.d("FL", "FoodsListScreen runs after composeable calls ")
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        TopBarAppView(navController = navController)
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(colorResource(id = R.color.background_SecondaryL))
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(colorResource(id = R.color.background_SecondaryL))) {
-
-    }
-    if (foodList != null) {
-        LazyColumn (
-            modifier = Modifier.padding(8.dp)
-                ){
-            items(foodList) { food ->
-                FoodItemRow(
-                    food = food,
-                    onClick = {selectedFood ->
-                        Log.i("FP", "The foodprofile/food.id is:${FoodProfile.route}/${selectedFood.id}")
-                        navController.navigate("${FoodProfile.route}/${selectedFood.id}")
-                        Log.i("FP", "navController.navigate ran successfully ")
+        ) {
+            Column() {
+                if (foodList != null) {
+                    Log.d("NAVBAR", "foodlist ifstatement ran")
+                    LazyColumn(
+                        modifier = Modifier.padding(8.dp)
+                    ) {
+                        items(foodList) { food ->
+                            FoodItemRow(
+                                food = food,
+                                onClick = { selectedFood ->
+                                    Log.i(
+                                        "FP",
+                                        "The foodprofile/food.id is:${FoodProfile.route}/${selectedFood.id}"
+                                    )
+                                    navController.navigate("${FoodProfile.route}/${selectedFood.id}")
+                                    Log.i("FP", "navController.navigate ran successfully ")
+                                }
+                            )
+                            Spacer(modifier = Modifier.padding(4.dp))
+                            Divider(color = colorResource(id = R.color.background_PrimaryD))
+                            Spacer(modifier = Modifier.padding(4.dp))
+                        }
                     }
-                )
-                Spacer(modifier = Modifier.padding(4.dp))
-                Divider(color = colorResource(id = R.color.background_PrimaryD))
-                Spacer(modifier = Modifier.padding(4.dp))
+
+                } else {
+                    Text(text = "Loading...")
+                }
+                Spacer(modifier = Modifier.weight(1f))
+                BottomBarAppView(navController = navController)
             }
+
+
+
         }
-    } else {
-        Text(text = "Loading...")
+
     }
 }
-
 
 
 
@@ -88,7 +109,7 @@ fun FoodItemRow(food: FoodItem, onClick: (FoodItem) -> Unit){
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick(food)}
+            .clickable { onClick(food) }
     ){
         Row(modifier = Modifier
             .fillMaxWidth()

@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.weyyam.tierfood.R
@@ -36,7 +37,7 @@ import com.weyyam.tierfood.ui.widgets.FoodCategoriesGrid
 
 
 @Composable
-fun SearchScreen(navController: NavHostController) {
+fun SearchScreen(navController: NavController) {
 
     Column(modifier = Modifier.fillMaxSize()) {
         TopBarAppView(navController = navController)

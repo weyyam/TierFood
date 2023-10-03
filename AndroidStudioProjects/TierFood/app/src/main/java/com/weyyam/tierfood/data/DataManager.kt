@@ -1,9 +1,11 @@
 package com.weyyam.tierfood.data
 
 import android.util.Log
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.weyyam.tierfood.model.foodCategories
 
 
 /**
@@ -46,15 +48,11 @@ class DataManager {
         db.collection("foods").document(documentId)
             .get()
             .addOnSuccessListener{document ->
-                if (document != null){
-                    val food = FoodItem(
-                        document.id,
-                        document.data?.get("name") as String,
-                        document.data?.get("description") as String,
-                        document.data?.get("tier") as String,
-                        document.data?.get("imageURL") as String,
-                        document.data?.get("type") as String)
-                    success(food)
+                val foodItem = document.toFoodItem()
+                if (foodItem != null){
+                    success(foodItem)
+                }else{
+                    failure(Exception("Document does not exist or cannot be found"))
                 }
             }
             .addOnFailureListener { exception ->
@@ -138,14 +136,8 @@ class DataManager {
                 val foodRef = db.collection("foods")
                 foodRef.whereIn(FieldPath.documentId(), favoriteFoodIds).get()
                     .addOnSuccessListener { foodSnapshot ->
-                        val favoriteFoods = foodSnapshot.documents.map { document ->
-                            FoodItem(
-                                document.id,
-                                document.data?.get("name") as String,
-                                document.data?.get("description") as String,
-                                document.data?.get("tier") as String,
-                                document.data?.get("imageURL") as String,
-                                document.data?.get("type") as String)
+                        val favoriteFoods = foodSnapshot.documents.mapNotNull { document ->
+                            document.toFoodItem()
                         }
                         Log.i("FFF", "Fetched favorite foods: $favoriteFoods")
                         success(favoriteFoods)
@@ -160,6 +152,7 @@ class DataManager {
                 failure(exception)
             }
     }
+    @Suppress("UNCHECKED_CAST")
     private fun QueryDocumentSnapshot.toFoodItem(): FoodItem {
         return FoodItem(
             id = id,
@@ -167,7 +160,23 @@ class DataManager {
             description = data["description"] as String,
             tier = data["tier"] as String,
             imageURL = data["imageURL"] as String,
-            type = data["type"] as String
+            type = data["type"] as String,
+            macros = data["marcos"] as Map<String, Double>?,
+            micros = data["micros"] as Map<String, Double>?
         )
     }
+    @Suppress("UNCHECKED_CAST")
+    private fun DocumentSnapshot.toFoodItem(): FoodItem {
+        return FoodItem(
+                id = id,
+                name = getString("name") ?: "",
+                description = getString("description") ?: "",
+                tier = getString("tier") ?: "",
+                imageURL = getString("imageURL") ?: "",
+                type = getString("type") ?: "",
+                macros = data?.get("macros") as? Map<String, Double>?,
+                micros = data?.get("micros") as? Map<String, Double>?
+            )
+    }
+
 }

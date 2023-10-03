@@ -16,6 +16,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.weyyam.tierfood.navigation.Home
@@ -24,7 +25,7 @@ import com.weyyam.tierfood.R
 import com.weyyam.tierfood.navigation.Search
 
 @Composable
-fun BottomBarAppView(navController :NavHostController){
+fun BottomBarAppView(navController : NavController){
 
     Row(
         modifier = Modifier

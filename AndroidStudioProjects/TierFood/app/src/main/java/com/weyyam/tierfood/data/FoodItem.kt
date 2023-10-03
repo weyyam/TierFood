@@ -9,5 +9,7 @@ data class FoodItem(
     val description: String,
     val tier: String,
     val imageURL: String,
-    val type: String
+    val type: String,
+    val macros: Map<String, Double>?,
+    val micros: Map<String, Double>?
 )
