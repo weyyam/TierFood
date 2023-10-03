@@ -62,6 +62,7 @@ fun HomeScreen(navController: NavController, userId : String){
                         Log.d("FFF", "Loading state success ")
                         Text(
                             text = "These are your saved Foods!",
+                            color = colorResource(id = R.color.white),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .background(colorResource(id = R.color.background_PrimaryD)),

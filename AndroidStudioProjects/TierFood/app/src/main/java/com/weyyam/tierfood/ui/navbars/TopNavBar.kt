@@ -34,12 +34,12 @@ fun TopBarAppView(navController: NavController){
     ){
 
         Image(
-            painter = painterResource(id = R.drawable.twotone_logo_dev_24),
+            painter = painterResource(id = R.drawable.logo_icon_white),
             contentDescription = "Temp Logo for the top nav bar",
             alignment = Alignment.Center,
             modifier = Modifier.size(36.dp),
             contentScale = ContentScale.Fit)
-
+        /*
         Image(
             painter = painterResource(id = R.drawable.baseline_person_24),
             contentDescription = "Temp holding of profile image while we wait for profile image to be added",
@@ -56,5 +56,7 @@ fun TopBarAppView(navController: NavController){
                 }
                 .size(36.dp),
             contentScale = ContentScale.Fit)
+
+         */
     }
 }
