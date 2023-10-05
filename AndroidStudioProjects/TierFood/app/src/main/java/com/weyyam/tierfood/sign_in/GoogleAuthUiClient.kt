@@ -1,32 +1,32 @@
 package com.weyyam.tierfood.sign_in
 
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.util.Log
+import android.widget.Toast
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.BeginSignInRequest.GoogleIdTokenRequestOptions
 import com.google.android.gms.auth.api.identity.SignInClient
-import com.google.android.play.core.integrity.e
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import java.util.concurrent.CancellationException
-import com.weyyam.tierfood.ui.favorite.UserFavoritesManager
 
 class GoogleAuthUiClient (
     private val context: Context,
     private val oneTapClient: SignInClient,
     private val initializeFavorites: (String) -> Unit
     ){
+
+    private val LOG_TAG = "GoogleAuthUiClient"
     val WEB_CLIENT_ID: String = "768752322941-hmfr0au0rtnvmq8ujkc0el2imjejtjuq.apps.googleusercontent.com"
 
     private val auth = Firebase.auth
 
     suspend fun signIn(): IntentSender? {
-        Log.d("SignIn", "sign in intent sender suspend function")
+        Log.d(LOG_TAG, "sign in intent sender suspend function")
         val result = try {
             oneTapClient.beginSignIn(
                 buildSignInRequest()
@@ -39,6 +39,7 @@ class GoogleAuthUiClient (
     }
 
     suspend fun signInWithIntent(intent: Intent): SignInResult{
+        Toast.makeText(context, "signInWithIntent ${intent}", Toast.LENGTH_LONG).show()
         val credential = oneTapClient.getSignInCredentialFromIntent(intent)
         val googleIdToken = credential.googleIdToken
         val googleCredentials = GoogleAuthProvider.getCredential(googleIdToken, null)
@@ -86,6 +87,8 @@ class GoogleAuthUiClient (
     }
 
     private fun buildSignInRequest(): BeginSignInRequest{
+        Toast.makeText(context, "buildSignInRequest started", Toast.LENGTH_LONG).show()
+
         return BeginSignInRequest.Builder()
             .setGoogleIdTokenRequestOptions(
                 GoogleIdTokenRequestOptions.builder()
