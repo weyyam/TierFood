@@ -10,32 +10,56 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.weyyam.tierfood.R
+import com.weyyam.tierfood.sign_in.GoogleAuthUiClient
 import com.weyyam.tierfood.sign_in.SignInState
+import kotlinx.coroutines.launch
 
 
 @Composable
 fun RegisterScreen(
     state: SignInState,
     onSignInClick: () -> Unit,
-    navController: NavController
+    navController: NavController,
+    googleAuthUiClient: GoogleAuthUiClient
 ){
     val context = LocalContext.current
+
+    val monitoredState = rememberUpdatedState(state)
+    val isSignInSuccessful by rememberUpdatedState(state.isSignInSuccessful)
+    val signInError by rememberUpdatedState(state.signInError)
+
+    LaunchedEffect(monitoredState.value){
+        Log.d("RECOMP", "RegisterScreen has recompoed due to state change")
+    }
+
+    LaunchedEffect(isSignInSuccessful){
+        Log.d("RECOMP", "isSignInSuccessful changed to $isSignInSuccessful")
+    }
+
+    LaunchedEffect(signInError){
+        Log.d("RECOMP", "signInError changed to $signInError")
+    }
+
     LaunchedEffect(key1 = state.signInError){
         state.signInError?.let { error ->
             Toast.makeText(
                 context,
                 error,
-                Toast.LENGTH_LONG
+                Toast.LENGTH_SHORT
             ).show()
         }
     }
@@ -58,14 +82,13 @@ fun RegisterScreen(
             Text(text = "Google SignIn")
 
         }
+
+
     }
-
-
-    
 
 }
 
-
+/*
 @Composable
 @Preview(showBackground = true)
 fun previewRegister(){
@@ -75,4 +98,6 @@ fun previewRegister(){
         state = SignInState()
     )
 }
+
+ */
 

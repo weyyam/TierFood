@@ -20,7 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,9 +44,17 @@ import com.weyyam.tierfood.navigation.FoodProfile
 
 @Composable
 fun TierRow(tier: Tier, foods: List<FoodItem>, onClick: (FoodItem) -> Unit){
+
+    val configuration = LocalConfiguration.current
+    val screenWidthDp = configuration.screenWidthDp.dp
+    val screenHeightDp = configuration.screenHeightDp.dp
+    val minDimension = minOf(screenWidthDp, screenHeightDp)
+    val density = LocalDensity.current.density
+    val imageSize = (minDimension.value / 6.5).dp
+
     Row(modifier = Modifier
         .fillMaxWidth()
-        .height(75.dp)
+        .height(imageSize + 10.dp)
         .background(colorResource(id = R.color.background_SecondaryL)),
         verticalAlignment = Alignment.CenterVertically,
 
@@ -53,7 +63,7 @@ fun TierRow(tier: Tier, foods: List<FoodItem>, onClick: (FoodItem) -> Unit){
         Box(
             modifier = Modifier
                 .padding(horizontal = 6.dp)
-                .size(65.dp)
+                .size(imageSize + 4.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .background(colorResource(id = tier.color)),
             contentAlignment = Alignment.Center){
@@ -79,7 +89,7 @@ fun TierRow(tier: Tier, foods: List<FoodItem>, onClick: (FoodItem) -> Unit){
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
-                        .size(65.dp)
+                        .size(imageSize)
                         .padding(4.dp)
                         .clip(RoundedCornerShape(15))
                         .clickable { onClick(food) })

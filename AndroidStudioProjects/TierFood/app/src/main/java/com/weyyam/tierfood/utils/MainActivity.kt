@@ -12,6 +12,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -25,6 +27,7 @@ import com.weyyam.tierfood.navigation.Home
 import com.weyyam.tierfood.navigation.Profile
 import com.weyyam.tierfood.navigation.Register
 import com.weyyam.tierfood.navigation.Search
+import com.weyyam.tierfood.screens.FoodProfileScreen
 import com.weyyam.tierfood.screens.HomeScreen
 import com.weyyam.tierfood.screens.ProfileScreen
 import com.weyyam.tierfood.screens.RegisterScreen
@@ -33,9 +36,9 @@ import com.weyyam.tierfood.sign_in.GoogleAuthUiClient
 import com.weyyam.tierfood.sign_in.SignInViewModel
 import com.weyyam.tierfood.ui.favorite.UserFavoritesManager
 import com.weyyam.tierfood.ui.theme.TierFoodTheme
-import com.weyyam.tierfood.screens.FoodProfileScreen
-import com.weyyam.tierfood.viewmodels.FoodViewModel
 import com.weyyam.tierfood.ui.widgets.FoodsListScreen
+import com.weyyam.tierfood.viewmodels.FoodViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -44,6 +47,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.i("LIFECYCLE", "MainActivity onCreate called")
          val localGoogleAuthUiClient = GoogleAuthUiClient(
                 context = applicationContext,
                 oneTapClient = Identity.getSignInClient(applicationContext),
@@ -58,6 +62,35 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        Log.i("LIFECYCLE", "MainActivity onStart called")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.i("LIFECYCLE", "MainActivity onResume called")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i("LIFECYCLE", "MainActivity onPause called")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i("LIFECYCLE", "MainActivity onStop called")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("LIFECYCLE", "MainActivity onDestroy called")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.i("LIFECYCLE", "MainActivity onRestart called")
+    }
 
 
     private fun initializeUserFavorites(userId: String){
@@ -67,33 +100,38 @@ class MainActivity : ComponentActivity() {
 
 
 
+
+
     @Composable
     fun MyNavigation(googleAuthUiClient: GoogleAuthUiClient){
 
         val navController = rememberNavController()
 
-        val currentUser = googleAuthUiClient.getSignedInUser()
+
+        val currentUser = remember { mutableStateOf(googleAuthUiClient.getSignedInUser())}
         val userFavoritesManager = if (currentUser != null){
-            UserFavoritesManager(currentUser.userId).also {
-                it.initializeUserFavorites()
+            currentUser.value?.let {
+                UserFavoritesManager(it.userId).also {
+                    it.initializeUserFavorites()
+                }
             }
         } else {
             null
         }
 
+
+
+
+
         NavHost(navController = navController, startDestination = Register.route){
 
+
+
             composable(Register.route){
+                Log.i("REGISTER_C", "Nav regster.route composable has started")
                 val viewModel = viewModel<SignInViewModel>()
                 val state by viewModel.state.collectAsStateWithLifecycle()
 
-                LaunchedEffect(key1 = Unit){
-                    if(googleAuthUiClient.getSignedInUser() != null){
-                        navController.navigate(Home.route){
-                            popUpTo(Register.route){inclusive = true}
-                        }
-                    }
-                }
 
                 val launcher = rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.StartIntentSenderForResult(),
@@ -110,52 +148,69 @@ class MainActivity : ComponentActivity() {
                     }
                 )
 
-
-
                 LaunchedEffect(key1 = state.isSignInSuccessful){
-                    if(state.isSignInSuccessful){
-                        Toast.makeText(
-                            applicationContext,
-                            "Sign in successful",
-                            Toast.LENGTH_LONG
-                        ).show()
+                    if (state.isSignInSuccessful){
+                        currentUser.value = googleAuthUiClient.getSignedInUser()
+                    }
+                }
+
+
+                Log.i("SIGNIN_MAIN", "Register composable has recomposed")
+                LaunchedEffect(key1 = state.isSignInSuccessful){
+                    val isUserAlreadySignedIn = googleAuthUiClient.getSignedInUser() != null
+                    Log.i("SIGNIN_MAIN", "user already signed in is:${isUserAlreadySignedIn}")
+                    if(isUserAlreadySignedIn && !state.isSignInSuccessful){
+                        Log.i("SIGNIN_MAIN", "User already signed in and starting auto sign in")
+                        delay(100)
                         navController.navigate(Home.route){
-                            popUpTo(Register.route){inclusive = true}
+                            popUpTo(Register.route){ inclusive = true }
+                            launchSingleTop =true
                         }
-                        viewModel.resetState()
+                    } else {
+                        Log.i("SIGNIN_MAIN", "isUserAlreadySignedIn is false and state.isSignInSuccessful is :${state.isSignInSuccessful}")
+                        if(state.isSignInSuccessful){
+                            navController.navigate(Home.route) {
+                                popUpTo(Register.route) { inclusive = true }
+                                launchSingleTop = true
+                            }
+                            viewModel.resetState()
+                        }
                     }
                 }
 
                 RegisterScreen(
                     state = state,
                     navController = navController,
+                    googleAuthUiClient = googleAuthUiClient,
                     onSignInClick = {
-                        Log.d("SignIn", "Sign in button clicked")
+                        Log.d("SignIn_try", "Sign in button clicked")
                         lifecycleScope.launch{
-                            Log.d("SignIn", "Inside corutine")
+                            Log.d("SignIn_try", "Inside corutine")
                             try {
                                 val signInIntentSender = googleAuthUiClient.signIn()
-                                Log.d("SignIn", "Receved intent sender: $signInIntentSender")
+                                Log.d("SignIn_try", "Receved intent sender: $signInIntentSender")
 
                                 if(signInIntentSender != null){
                                     launcher.launch(IntentSenderRequest.Builder(signInIntentSender).build())
                                 }else{
-                                    Log.e("SignIn", "signInIntentSender is null")
+                                    Log.e("SignIn_try", "signInIntentSender is null")
                                 }
                             }catch (e: Exception){
-                                Log.e("SignIn", "Error during signIn", e)
+                                Log.e("SignIn_try", "Error during signIn", e)
                             }
                         }
 
 
                     }
                 )
+                Log.i("REGISTER_C", "End of register composable")
 
             }
             composable(Home.route){
-                if (currentUser != null) {
-                    HomeScreen(navController, userId = currentUser.userId)
-                }
+                Log.i("HOMESCREENN", "Home screen has been opened")
+                Log.i("HOMESCREENN", "current user is $currentUser")
+                currentUser.value?.let { it1 -> HomeScreen(navController, userId = it1.userId) }
+                Log.i("SPlASH", "currentUser.userId is: $currentUser.userId")
             }
             composable(Profile.route){
                 ProfileScreen(
@@ -167,7 +222,7 @@ class MainActivity : ComponentActivity() {
                             Toast.makeText(
                                 applicationContext,
                                 "Signed out",
-                                Toast.LENGTH_LONG
+                                Toast.LENGTH_SHORT
                             ).show()
                             navController.navigate(Register.route){
                                 popUpTo(Home.route){inclusive = true}
@@ -200,7 +255,6 @@ class MainActivity : ComponentActivity() {
                 }
 
             }
-
 
         }
     }
