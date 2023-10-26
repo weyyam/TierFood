@@ -81,7 +81,7 @@ fun TierRow(tier: Tier, foods: List<FoodItem>, onClick: (FoodItem) -> Unit){
                         .data(data = food.imageURL)
                         .apply(block = fun ImageRequest.Builder.() {
                             crossfade(true)
-                            placeholder(R.drawable.fruit_category)
+                            placeholder(R.drawable.fruits_category)
                         }).build())
 
                 Image(

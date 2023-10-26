@@ -97,7 +97,7 @@ fun FoodProfileScreen(
             .data(data = foodItem?.imageURL)
             .apply(block = fun ImageRequest.Builder.(){
                 crossfade(true)
-                placeholder(R.drawable.fruit_category)
+                placeholder(R.drawable.fruits_category)
             }).build()
     )
 

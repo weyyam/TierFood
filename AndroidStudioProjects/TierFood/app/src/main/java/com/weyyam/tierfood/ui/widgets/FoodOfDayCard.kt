@@ -47,7 +47,7 @@ fun FoodOfDayCard(){
     val foodOfTheDay = viewModel.foodOfTheDay
 
     if (foodOfTheDay != null){
-        fotdc(foodOfTheDay = foodOfTheDay)
+        Fotdc(foodOfTheDay = foodOfTheDay)
     }else{
         CircularProgressIndicator()
     }
@@ -57,7 +57,7 @@ fun FoodOfDayCard(){
 }
 
 @Composable
-fun fotdc(foodOfTheDay: FoodItem){
+fun Fotdc(foodOfTheDay: FoodItem){
 
     val tiervalue = foodOfTheDay.tier
     val tierDataClass = tierMap[tiervalue] ?: error("Invalid tier string $tiervalue")

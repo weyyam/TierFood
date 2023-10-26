@@ -2,6 +2,7 @@ package com.weyyam.tierfood.ui.widgets
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -80,6 +81,8 @@ fun CategoryIcon(category: String, imageResId: Int, onClick: (String) -> Unit){
             text = category,
             fontSize = 26.sp,
             color = colorResource(id = R.color.white),
-            modifier = Modifier.align(Alignment.BottomStart))
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .background(colorResource(id = R.color.background_SecondaryL).copy(alpha = 0.6f)))
     }
 }
