@@ -57,7 +57,7 @@ fun HomeScreen(navController: NavController, userId : String){
                         .fillMaxSize()
                         .background(colorResource(id = R.color.background_PrimaryD))
                 ) {
-                    FoodOfDayCard()
+                    FoodOfDayCard(navController = navController)
 
                     when (_loadingState) {
                         DataManager.LoadingState.LOADING -> {

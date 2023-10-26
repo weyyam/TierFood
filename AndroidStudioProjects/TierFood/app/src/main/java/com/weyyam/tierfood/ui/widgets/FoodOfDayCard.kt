@@ -3,6 +3,7 @@ package com.weyyam.tierfood.ui.widgets
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.weyyam.tierfood.R
@@ -36,18 +38,21 @@ import com.weyyam.tierfood.model.c_rank
 import com.weyyam.tierfood.model.d_rank
 import com.weyyam.tierfood.model.f_rank
 import com.weyyam.tierfood.model.s_rank
+import com.weyyam.tierfood.navigation.FoodProfile
 import com.weyyam.tierfood.viewmodels.FoodOfDayViewModel
 
 
 @Composable
-fun FoodOfDayCard(){
+fun FoodOfDayCard(navController: NavController){
     
     val viewModel: FoodOfDayViewModel = viewModel()
     
     val foodOfTheDay = viewModel.foodOfTheDay
 
     if (foodOfTheDay != null){
-        Fotdc(foodOfTheDay = foodOfTheDay)
+        Fotdc(foodOfTheDay = foodOfTheDay, onClick = {foodItem ->
+            navController.navigate("${FoodProfile.route}/${foodItem.id}")
+        })
     }else{
         CircularProgressIndicator()
     }
@@ -57,7 +62,9 @@ fun FoodOfDayCard(){
 }
 
 @Composable
-fun Fotdc(foodOfTheDay: FoodItem){
+fun Fotdc(
+    foodOfTheDay: FoodItem,
+    onClick: (FoodItem) ->Unit){
 
     val tiervalue = foodOfTheDay.tier
     val tierDataClass = tierMap[tiervalue] ?: error("Invalid tier string $tiervalue")
@@ -67,6 +74,7 @@ fun Fotdc(foodOfTheDay: FoodItem){
             .fillMaxWidth()
             .height(200.dp)
             .background(colorResource(id = R.color.background_SecondaryL))
+            .clickable {onClick(foodOfTheDay)}
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
             Row(modifier = Modifier
@@ -127,9 +135,11 @@ val tierMap = mapOf(
 
 
 
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun previewFoodOfDayCard(){
     FoodOfDayCard()
 }
+
+ */
