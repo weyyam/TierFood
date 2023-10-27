@@ -17,12 +17,24 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -35,6 +47,7 @@ import coil.request.ImageRequest
 import com.weyyam.tierfood.R
 import com.weyyam.tierfood.data.FoodItem
 import com.weyyam.tierfood.navigation.FoodProfile
+import com.weyyam.tierfood.screens.SearchBar
 import com.weyyam.tierfood.ui.navbars.BottomBarAppView
 import com.weyyam.tierfood.ui.navbars.TopBarAppView
 import com.weyyam.tierfood.viewmodels.FoodViewModel
@@ -50,11 +63,15 @@ fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String, na
      */
     viewModel.fetchFoodsForCategory(category)
     val foodList = viewModel.foodList
+    var query by remember { mutableStateOf("")}
     Log.d("FL", "FoodsListScreen runs after composeable calls ")
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(id = R.color.background_SecondaryL))
     ) {
         TopBarAppView(navController = navController)
+        SearchBarCat(query = query, onQueryChanged = {query = it} )
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -64,10 +81,15 @@ fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String, na
             Column() {
                 if (foodList != null) {
                     Log.d("NAVBAR", "foodlist ifstatement ran")
+
+                    val filteredAndSortedFoods = foodList
+                        .filter { it.name.contains(query, ignoreCase = true) }
+                        .sortedBy { it.name }
+
                     LazyColumn(
                         modifier = Modifier.padding(8.dp)
                     ) {
-                        items(foodList) { food ->
+                        items(filteredAndSortedFoods) { food ->
                             FoodItemRow(
                                 food = food,
                                 onClick = { selectedFood ->
@@ -147,6 +169,39 @@ fun NetworkImage(url: String){
             .size(48.dp)
             .clip(RoundedCornerShape(15)),
         contentScale = ContentScale.Crop)
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SearchBarCat(query: String, onQueryChanged: (String) -> Unit){
+    Box(
+        modifier = Modifier.fillMaxWidth(),
+        contentAlignment = Alignment.Center
+    ){
+
+        TextField(
+            value = query,
+            onValueChange = onQueryChanged,
+            leadingIcon = {
+                Icon(Icons.Default.Search,
+                    contentDescription = "Search Icon")
+            },
+            placeholder = { Text(text = "Search")},
+            singleLine = true,
+            shape = RoundedCornerShape(15),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(15))
+                .padding(vertical = 8.dp, horizontal = 12.dp),
+            colors = TextFieldDefaults.textFieldColors(
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                containerColor = Color.White,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black
+            ))
+    }
 }
 
 

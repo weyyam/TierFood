@@ -33,6 +33,7 @@ fun FoodCategoriesGrid(navController: NavController){
     /**
      * This is the grid layout for the Categories in the search page
      */
+
     val categories = foodCategories
 
     LazyVerticalGrid(

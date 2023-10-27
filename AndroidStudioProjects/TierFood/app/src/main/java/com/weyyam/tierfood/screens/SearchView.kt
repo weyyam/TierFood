@@ -106,7 +106,9 @@ fun SearchBar(query: String, onQueryChanged: (String) -> Unit){
             colors = TextFieldDefaults.textFieldColors(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
-                containerColor = Color.White
+                containerColor = Color.White,
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.Black
             ))
 
 
