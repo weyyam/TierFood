@@ -80,8 +80,8 @@ fun CategoryIcon(category: String, imageResId: Int, onClick: (String) -> Unit){
             contentScale = ContentScale.FillBounds)
         Text(
             text = category,
-            fontSize = 26.sp,
-            color = colorResource(id = R.color.white),
+            fontSize = 20.sp,
+            color = colorResource(id = R.color.black),
             modifier = Modifier
                 .align(Alignment.BottomStart)
                 .background(colorResource(id = R.color.background_SecondaryL).copy(alpha = 0.6f)))

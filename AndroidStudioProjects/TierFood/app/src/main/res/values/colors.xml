@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="red_s">#E57373</color>
-    <color name="orange_a">#FFB74D</color>
-    <color name="yellow_b">#FFF176</color>
-    <color name="green_c">#81C784</color>
-    <color name="blue_d">#4FC3F7</color>
-    <color name="purple_f">#9575CD</color>
-    <color name="background_SecondaryL">#878787</color>//Light color is #878787
-    <color name="background_PrimaryD">#393939</color>//dark color is #393939
+    <color name="red_s">#9575CD</color>//red#E57373
+    <color name="orange_a">#FFB74D</color>//ornage#FFB74D
+    <color name="yellow_b">#FFF176</color>//yellow#FFF176
+    <color name="green_c">#81C784</color>//green#81C784
+    <color name="blue_d">#4FC3F7</color>//blue#4FC3F7
+    <color name="purple_f">#E57373</color>//purple#9575CD
+    <!--<color name="background_SecondaryL">#878787</color>//Light color is #878787
+    <color name="background_PrimaryD">#393939</color>//dark color is #393939-->
+    <color name="background_SecondaryL">#B6B6B6</color>//dark color is #393939
+    <color name="background_PrimaryD">#878787</color>//dark color is #393939
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

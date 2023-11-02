@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,6 +19,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -32,7 +34,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.layout.ContentScale
@@ -64,6 +68,9 @@ fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String, na
     viewModel.fetchFoodsForCategory(category)
     val foodList = viewModel.foodList
     var query by remember { mutableStateOf("")}
+    var isToggled by remember { mutableStateOf(false)}
+
+
     Log.d("FL", "FoodsListScreen runs after composeable calls ")
     Column(
         modifier = Modifier
@@ -72,6 +79,9 @@ fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String, na
     ) {
         TopBarAppView(navController = navController)
         SearchBarCat(query = query, onQueryChanged = {query = it} )
+        sortBar(tierSortIsToggled = isToggled){ newValue ->
+            isToggled = newValue
+        }
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -82,9 +92,12 @@ fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String, na
                 if (foodList != null) {
                     Log.d("NAVBAR", "foodlist ifstatement ran")
 
+                    val tierOrder = listOf("S", "A", "B", "C", "D", "F")
+
+
                     val filteredAndSortedFoods = foodList
                         .filter { it.name.contains(query, ignoreCase = true) }
-                        .sortedBy { it.name }
+                        .sortedWith(compareBy({if (isToggled) tierOrder.indexOf(it.tier) else 0}, { it.name}))
 
                     LazyColumn(
                         modifier = Modifier.padding(8.dp)
@@ -110,13 +123,16 @@ fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String, na
                 } else {
                     Text(text = "Loading...")
                 }
-                Spacer(modifier = Modifier.weight(1f))
-                BottomBarAppView(navController = navController)
             }
 
 
-
         }
+        /*
+        This doesnt work for some reason should look into this and what makes
+        the bottom nav bar stay in one place
+         */
+        Spacer(modifier = Modifier.weight(1f))
+        BottomBarAppView(navController = navController)
 
     }
 }
@@ -204,10 +220,45 @@ fun SearchBarCat(query: String, onQueryChanged: (String) -> Unit){
     }
 }
 
+@Composable
+fun sortBar(tierSortIsToggled: Boolean, onToggle: (Boolean) -> Unit){
+
+    val iconColor = if (tierSortIsToggled) colorResource(id = R.color.white) else colorResource(id = R.color.black)
+
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .fillMaxHeight(0.05f)
+        .background(color = colorResource(R.color.background_SecondaryL)),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        Icon(
+            Icons.Default.ArrowDropDown,
+            contentDescription = null,
+            modifier = Modifier
+                .padding(horizontal = 26.dp)
+                .alpha(0f))
+        Icon(
+            Icons.Default.ArrowDropDown,
+            contentDescription = null,
+            modifier = Modifier
+                .padding(horizontal = 26.dp)
+                .alpha(0f)
+                    )
+        Icon(
+            Icons.Default.ArrowDropDown,
+            contentDescription = null,
+            modifier = Modifier
+                .padding(horizontal = 26.dp)
+                .clickable(onClick = { onToggle(!tierSortIsToggled) }),
+            tint = iconColor)
+    }
+}
+
 
 
 @Composable
 @Preview(showBackground = true)
-fun PreviewFoodItemRow(){
-    //FoodItemRow(food = FoodItem(id = "0", name = "Bluebarries", description = "This is the description", tier = "B", type = "Fruits", imageURL = "https://firebasestorage.googleapis.com/v0/b/tierfood-d1dd0.appspot.com/o/BlueBerries_image.png?alt=media&token=4b532482-fabd-47dc-84ad-8c8e9d3112b6"))
+fun sortBarPreview(){
+    //sortBar()
 }
