@@ -251,10 +251,28 @@ fun FoodProfileScreen(
 @Composable
 fun DisplayMapDataMacro(mapData: Map<String, Double>?){
     Column {
-        mapData?.forEach { (key, value) ->
-            Text(
-                text = "$key: ${value}g",
-                modifier = Modifier.padding(4.dp))
+        mapData
+            ?.mapValues { it.value.toInt() }
+            ?.entries
+            ?.sortedByDescending {it.value}
+            ?.forEach { (key, value) ->
+            if (key.lowercase() == "calories") {
+                Text(
+                    text = "${formatVitaminName(key)}: ${value}kcal",
+                    modifier = Modifier.padding(4.dp)
+                )
+
+            }else if (key.lowercase() == "gi"){
+                Text(
+                    text = "Glycemic Index: $value"
+                )
+
+            } else {
+                Text(
+                    text = "${formatVitaminName(key)}: ${value}g",
+                    modifier = Modifier.padding(4.dp))
+            }
+
         }
     }
 }
@@ -262,12 +280,21 @@ fun DisplayMapDataMacro(mapData: Map<String, Double>?){
 @Composable
 fun DisplayMapDataMicro(mapData: Map<String, Double>?){
     Column {
-        mapData?.forEach { (key, value) ->
+        mapData
+            ?.mapValues { it.value.toInt() }
+            ?.entries
+            ?.sortedByDescending { it.value }
+            ?.forEach { (key, value) ->
             Text(
-                text = "$key: ${value}%",
+                text = "${formatVitaminName(key)}: ${value}%",
                 modifier = Modifier.padding(4.dp))
         }
     }
 }
 
+
+fun formatVitaminName(name: String): String{
+    return name.split('_')
+        .joinToString(" ") { it.replaceFirstChar { char -> char.uppercase() } }
+}
 
