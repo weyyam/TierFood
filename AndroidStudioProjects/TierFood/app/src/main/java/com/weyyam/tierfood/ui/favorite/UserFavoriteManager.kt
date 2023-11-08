@@ -4,7 +4,7 @@ import android.util.Log
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
-class UserFavoritesManager(private val userId: String) {
+open class UserFavoritesManager(private val userId: String) {
 
     private val db = FirebaseFirestore.getInstance()
     private val userFavoritesRef = db.collection("userFavorites").document(userId)

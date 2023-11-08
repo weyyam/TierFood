@@ -49,7 +49,7 @@ fun HomeScreen(navController: NavController, userId : String){
         val maxHeight = constraints.maxHeight
 
         Column(modifier = Modifier.fillMaxSize()) {
-            TopBarAppView(navController = navController)
+            TopBarAppView(navController = navController, modifier = Modifier)
             Box(
                 modifier = Modifier.weight(1f)
             ) {
@@ -87,7 +87,7 @@ fun HomeScreen(navController: NavController, userId : String){
 
                 }
             }
-            BottomBarAppView(navController = navController)
+            BottomBarAppView(navController = navController, modifier = Modifier)
         }
     }
 

@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -103,7 +104,7 @@ fun Fotdc(
                         contentScale = ContentScale.Crop)
                 }
 
-                Text(text = foodOfTheDay.name)
+                Text(text = foodOfTheDay.name, fontWeight = FontWeight.SemiBold)
                 // potentially make this its own class at some point
                 //This is the S Box
                 Box(

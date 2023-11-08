@@ -54,7 +54,7 @@ fun SearchScreen(navController: NavController) {
     Column(modifier = Modifier
         .fillMaxSize()
         .background(colorResource(id = R.color.background_SecondaryL))) {
-        TopBarAppView(navController = navController)
+        TopBarAppView(navController = navController, modifier = Modifier)
         Box(modifier = Modifier.weight(1f)
         ) {
             Column(modifier = Modifier
@@ -75,7 +75,7 @@ fun SearchScreen(navController: NavController) {
             }
         }
         Spacer(modifier = Modifier.weight(0.005f))
-        BottomBarAppView(navController = navController)
+        BottomBarAppView(navController = navController, modifier = Modifier)
     }
 
 }

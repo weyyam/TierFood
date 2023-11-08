@@ -25,10 +25,10 @@ import com.weyyam.tierfood.R
 import com.weyyam.tierfood.navigation.Search
 
 @Composable
-fun BottomBarAppView(navController : NavController){
+fun BottomBarAppView(navController : NavController, modifier: Modifier){
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(50.dp)
             .background(colorResource(id = R.color.background_PrimaryD)),
@@ -71,5 +71,5 @@ fun BottomBarAppView(navController : NavController){
 @Composable
 @Preview(showBackground = true)
 fun previewBottomAppBar(){
-    BottomBarAppView(navController = rememberNavController())
+    //BottomBarAppView(navController = rememberNavController())
 }

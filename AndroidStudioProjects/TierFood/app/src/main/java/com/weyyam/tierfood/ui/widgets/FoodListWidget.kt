@@ -77,7 +77,7 @@ fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String, na
             .fillMaxSize()
             .background(colorResource(id = R.color.background_SecondaryL))
     ) {
-        TopBarAppView(navController = navController)
+        TopBarAppView(navController = navController, modifier = Modifier)
         SearchBarCat(query = query, onQueryChanged = {query = it} )
         sortBar(tierSortIsToggled = isToggled){ newValue ->
             isToggled = newValue
@@ -132,7 +132,7 @@ fun FoodsListScreen(viewModel: FoodViewModel = viewModel(), category: String, na
         the bottom nav bar stay in one place
          */
         Spacer(modifier = Modifier.weight(1f))
-        BottomBarAppView(navController = navController)
+        BottomBarAppView(navController = navController, modifier = Modifier)
 
     }
 }

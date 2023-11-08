@@ -34,16 +34,16 @@ import com.weyyam.tierfood.R
 import com.weyyam.tierfood.ui.feedback.FeedbackDialog
 
 @Composable
-fun TopBarAppView(navController: NavController){
+fun TopBarAppView(navController: NavController, modifier: Modifier){
 
     val showDialog = remember { mutableStateOf(false)}
     val snackbarHostState = remember { SnackbarHostState() }
     val snackbarMessage = remember { mutableStateOf("")}
     val showSnackbar = remember { mutableStateOf(false)}
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier
             .height(50.dp)
+            .fillMaxWidth()
             .background(colorResource(id = R.color.background_PrimaryD)),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly

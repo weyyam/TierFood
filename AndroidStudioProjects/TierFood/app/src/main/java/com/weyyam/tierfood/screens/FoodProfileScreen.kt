@@ -3,13 +3,10 @@ package com.weyyam.tierfood.screens
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -25,17 +22,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
@@ -87,13 +86,17 @@ fun FoodProfileScreen(
 
 
     val foodItem = viewModel.getFoodById(foodId)
+    val scrollState = rememberScrollState()
+    var imageBottomY by remember { mutableStateOf(0.dp)}
+    var bottomBarTopY by remember { mutableStateOf(0.dp)}
+
     Log.i("FPS", "FoodProfileScreen Composable has run with the food item ${foodItem}")
 
     val painter = rememberAsyncImagePainter(
         ImageRequest
             .Builder(LocalContext.current)
             .data(data = foodItem?.imageURL)
-            .apply(block = fun ImageRequest.Builder.(){
+            .apply(block = fun ImageRequest.Builder.() {
                 crossfade(true)
                 placeholder(R.drawable.fruits_category)
             }).build()
@@ -101,77 +104,129 @@ fun FoodProfileScreen(
 
 
 
-    Column(
+
+    ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                color = colorResource(id = R.color.background_SecondaryL)
-            )
+            .background(color = colorResource(id = R.color.background_SecondaryL))
     ) {
-        TopBarAppView(navController = navController)
+        val (topBar, image, title, star, tierBox, scrollable, bottomBar, info) = createRefs()
+
+        val guidelineTop = createGuidelineFromTop(imageBottomY) // Assuming top bar height
+        val guidelineBottom = createGuidelineFromBottom(bottomBarTopY) // Assuming bottom bar height
+        val density = LocalDensity.current
+
+
+        TopBarAppView(
+            navController = navController,
+            modifier = Modifier
+                .constrainAs(topBar) {
+            top.linkTo(parent.top)
+            start.linkTo(parent.start)
+            end.linkTo(parent.end)
+        })
         /**
          * FoodImage,name,star,tier top Row
          */
+        val topBarHeight = 56.dp
 
 
-        Row(
+        Image(
+            painter = painter,
+            contentDescription = "Image of Food in question",
             modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.Top
-        ) {
-            Image(
-                painter = painter,
-                contentDescription = "Image of Food in question",
-                modifier = Modifier
-                    .size(150.dp)
-                    .padding(8.dp)
-                    .clip(RoundedCornerShape(15)),
-                contentScale = ContentScale.Crop
-            )
-
-            if (foodItem != null) {
-                Text(
-                    text = foodItem.name,
-                    modifier = Modifier
-                        .padding(vertical = 8.dp),
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-            Box(modifier = Modifier.padding(8.dp)){
-                ClickableStar(foodId = foodId, userFavoritesManager = userFavoritesManager)
-
-            }
-
-            Column(){
-                if (foodItem != null) {
-                    TierBoxFoodProfile(tier = foodItem.tier)
+                .size(150.dp)
+                .padding(8.dp)
+                .clip(RoundedCornerShape(15))
+                .onGloballyPositioned { layoutCoordinates ->
+                    val pixelValue =
+                        layoutCoordinates.positionInRoot().y.toInt() + layoutCoordinates.size.height.toInt()
+                    //imageBottomY = with(density) { pixelValue.toDp()}
+                    imageBottomY = 210.dp
+                    Log.d("LAYOUT", "imagebottomY: $imageBottomY")
                 }
-            }
+                .constrainAs(image) {
+                    top.linkTo(topBar.bottom)
+                    start.linkTo(parent.start)
+                }
+        )
 
+        if (foodItem != null) {
+            Text(
+                text = foodItem.name,
+                modifier = Modifier
+                    .padding(vertical = 8.dp)
+                    .constrainAs(title) {
+                        top.linkTo(image.top)
+                        start.linkTo(image.end)
+                        end.linkTo(star.start)
+                    },
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+        
+        Text(
+            text = "Nutritional Data is Based on 100g of Food",
+            fontSize = 10.sp,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier
+                .padding(4.dp)
+                .constrainAs(info){
+                    start.linkTo(image.end)
+                    bottom.linkTo(image.bottom)
+                })
+        Box(
+            modifier = Modifier
+                .padding(4.dp)
+                .constrainAs(star) {
+                    top.linkTo(topBar.bottom)
+                    end.linkTo(tierBox.start)
+                }) {
+            ClickableStar(foodId = foodId, userFavoritesManager = userFavoritesManager)
 
         }
+
+        Box(modifier = Modifier.constrainAs(tierBox) {
+            top.linkTo(topBar.bottom)
+            end.linkTo(parent.end)
+        }) {
+            if (foodItem != null) {
+                TierBoxFoodProfile(tier = foodItem.tier)
+            }
+        }
+
+
         /**
          * description aswell as Micro and Macro Info for food
          */
-        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+
+
+        Column(modifier =
+        Modifier
+            .padding(top = 125.dp, bottom = 120.dp)
+            .verticalScroll(scrollState)
+            .constrainAs(scrollable) {
+                top.linkTo(guidelineTop)
+                bottom.linkTo(guidelineBottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+
+            }) {
+
+
 
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
-                    .border(
-                        width = 1.dp,
-                        color = colorResource(id = R.color.black),
-                        shape = RoundedCornerShape(8)
-                    )
                     .background(
                         colorResource(id = R.color.background_PrimaryD),
                         shape = RoundedCornerShape(8)
                     )
 
-            ){
+
+            ) {
                 if (foodItem != null) {
                     Text(
                         text = foodItem.description,
@@ -179,6 +234,7 @@ fun FoodProfileScreen(
                     )
                 }
             }
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -188,11 +244,6 @@ fun FoodProfileScreen(
                     modifier = Modifier
                         .fillMaxWidth(0.5f)
                         .padding(horizontal = 8.dp)
-                        .border(
-                            width = 1.dp,
-                            color = colorResource(id = R.color.black),
-                            shape = RoundedCornerShape(8)
-                        )
                         .background(
                             colorResource(id = R.color.background_PrimaryD),
                             shape = RoundedCornerShape(8)
@@ -215,17 +266,12 @@ fun FoodProfileScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp)
-                        .border(
-                            width = 1.dp,
-                            color = colorResource(id = R.color.black),
-                            shape = RoundedCornerShape(8)
-                        )
                         .background(
                             colorResource(id = R.color.background_PrimaryD),
                             shape = RoundedCornerShape(8)
                         )
                 ) {
-                    Column (modifier = Modifier.padding(4.dp)){
+                    Column(modifier = Modifier.padding(4.dp)) {
                         Text(
                             text = "Micros Nutrients",
                             fontWeight = FontWeight.Bold,
@@ -237,16 +283,37 @@ fun FoodProfileScreen(
                     }
 
                 }
+
+
+
+
             }
+
         }
 
 
-        Spacer(modifier = Modifier.weight(1f))
-        BottomBarAppView(navController = navController)
+
+
+
+        BottomBarAppView(
+            navController = navController,
+            modifier = Modifier
+
+                .constrainAs(bottomBar) {
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }
+                .onGloballyPositioned { layoutCoordinates ->
+                    val pixelValue = layoutCoordinates.positionInRoot().y.toInt()
+                    //bottomBarTopY = with(density) { pixelValue.toDp()}
+                    bottomBarTopY = 60.dp
+                    Log.d("LAYOUT", "bottomBarTopY: $bottomBarTopY")
+                }
+        )
     }
 
 }
-
 
 @Composable
 fun DisplayMapDataMacro(mapData: Map<String, Double>?){
@@ -297,4 +364,6 @@ fun formatVitaminName(name: String): String{
     return name.split('_')
         .joinToString(" ") { it.replaceFirstChar { char -> char.uppercase() } }
 }
+
+
 

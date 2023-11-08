@@ -42,7 +42,7 @@ fun ProfileScreen(
             .background(colorResource(id = R.color.background_SecondaryL))
 
     ) {
-        TopBarAppView(navController = navController)
+        TopBarAppView(navController = navController, modifier = Modifier)
         Box(
             modifier = Modifier.weight(0.5f)
         ){
@@ -86,7 +86,7 @@ fun ProfileScreen(
                 Spacer(modifier = Modifier.weight(1f))
             }
         }
-        BottomBarAppView(navController = navController)
+        BottomBarAppView(navController = navController, modifier = Modifier)
         //To make it such that the Bar stays on the bottom add lazy list and move BottomBarAppView out of the column
 
     }
