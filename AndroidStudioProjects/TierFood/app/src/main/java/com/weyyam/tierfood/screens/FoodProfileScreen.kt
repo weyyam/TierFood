@@ -40,6 +40,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.weyyam.tierfood.R
+import com.weyyam.tierfood.navigation.NutrientProfile
 import com.weyyam.tierfood.ui.favorite.UserFavoritesManager
 import com.weyyam.tierfood.ui.navbars.BottomBarAppView
 import com.weyyam.tierfood.ui.navbars.TopBarAppView
@@ -172,7 +173,7 @@ fun FoodProfileScreen(
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier
                 .padding(4.dp)
-                .constrainAs(info){
+                .constrainAs(info) {
                     start.linkTo(image.end)
                     bottom.linkTo(image.bottom)
                 })
@@ -256,7 +257,11 @@ fun FoodProfileScreen(
                             modifier = Modifier.padding(4.dp)
                         )
                         if (foodItem != null) {
-                            DisplayMapDataMacro(foodItem.macros)
+                            DisplayMapDataMacro(
+                                foodItem.macros,
+                                onClick = { selectedNutrient ->
+                                    navController.navigate("${NutrientProfile.route}/${selectedNutrient}")
+                                })
                         }
                     }
 
@@ -278,7 +283,11 @@ fun FoodProfileScreen(
                             modifier = Modifier.padding(4.dp)
                         )
                         if (foodItem != null) {
-                            DisplayMapDataMicro(foodItem.micros)
+                            DisplayMapDataMicro(
+                                foodItem.micros,
+                                onClick = { selectedNutrient ->
+                                    navController.navigate("${NutrientProfile.route}/${selectedNutrient}")
+                                })
                         }
                     }
 
@@ -316,36 +325,32 @@ fun FoodProfileScreen(
 }
 
 @Composable
-fun DisplayMapDataMacro(mapData: Map<String, Double>?){
+fun DisplayMapDataMacro(mapData: Map<String, Double>?, onClick: (String) -> Unit){
     Column {
         mapData
             ?.mapValues { it.value.toInt() }
             ?.entries
             ?.sortedByDescending {it.value}
             ?.forEach { (key, value) ->
-            if (key.lowercase() == "calories") {
-                Text(
-                    text = "${formatVitaminName(key)}: ${value}kcal",
-                    modifier = Modifier.padding(4.dp)
-                )
-
+            val displayText = if (key.lowercase() == "calories") {
+                "${formatVitaminName(key)}: ${value}kcal"
             }else if (key.lowercase() == "gi"){
-                Text(
-                    text = "Glycemic Index: $value"
-                )
-
+                "Glycemic Index: $value"
             } else {
-                Text(
-                    text = "${formatVitaminName(key)}: ${value}g",
-                    modifier = Modifier.padding(4.dp))
+                "${formatVitaminName(key)}: ${value}g"
             }
-
+                Text(
+                    text = displayText,
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .clickable { onClick(formatVitaminName(key)) }
+                )
         }
     }
 }
 
 @Composable
-fun DisplayMapDataMicro(mapData: Map<String, Double>?){
+fun DisplayMapDataMicro(mapData: Map<String, Double>?, onClick: (String) -> Unit){
     Column {
         mapData
             ?.mapValues { it.value.toInt() }
@@ -354,7 +359,9 @@ fun DisplayMapDataMicro(mapData: Map<String, Double>?){
             ?.forEach { (key, value) ->
             Text(
                 text = "${formatVitaminName(key)}: ${value}%",
-                modifier = Modifier.padding(4.dp))
+                modifier = Modifier
+                    .padding(4.dp)
+                    .clickable { onClick(formatVitaminName(key)) })
         }
     }
 }

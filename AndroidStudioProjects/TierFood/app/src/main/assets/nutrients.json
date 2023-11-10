@@ -1,0 +1,227 @@
+[
+  {
+    "name": "Vitamin A",
+    "description": "Essential for healthy eyesight, skin, and immune system.",
+    "importance": "Deficiency can lead to night blindness and an increased risk of infections.",
+    "recommendedIntake": "700 to 900 µg per day",
+    "commonlyFound": ["Carrots", "Sweet potatoes", "Spinach", "Kale", "Apricots"]
+  },
+  {
+    "name": "Vitamin B1",
+    "description": "Also known as Thiamine, plays a crucial role in energy metabolism and nerve function.",
+    "importance": "Deficiency can cause beriberi, symptoms include weight loss, emotional disturbances, impaired sensory perception.",
+    "recommendedIntake": "1.1 to 1.2 mg per day",
+    "commonlyFound": ["Whole grains", "Pork", "Seeds", "Nuts", "Legumes"]
+  },
+  {
+    "name": "Vitamin B2",
+    "description": "Also known as Riboflavin, important for growth, energy production, and the breakdown of fats, drugs, and steroids.",
+    "importance": "Deficiency can lead to skin disorders, cracks at the corners of the mouth, hair loss, itchy and red eyes.",
+    "recommendedIntake": "1.1 to 1.3 mg per day",
+    "commonlyFound": ["Milk", "Eggs", "Green vegetables", "Lean meats", "Legumes"]
+  },
+  {
+    "name": "Vitamin B3",
+    "description": "Also known as Niacin, helps convert food into energy, essential for healthy skin, blood cells, brain, and nervous system.",
+    "importance": "Deficiency can cause pellagra, characterized by diarrhea, dermatitis, and dementia.",
+    "recommendedIntake": "14 to 16 mg per day",
+    "commonlyFound": ["Chicken", "Tuna", "Turkey", "Salmon", "Brown rice"]
+  },
+  {
+    "name": "Vitamin B6",
+    "description": "Important for normal brain development and for keeping the nervous and immune systems healthy.",
+    "importance": "Deficiency may cause anemia, confusion, depression, and a weakened immune system.",
+    "recommendedIntake": "1.3 to 1.7 mg per day",
+    "commonlyFound": ["Chickpeas", "Bananas", "Cottage cheese", "Beef", "Tuna"]
+  },
+  {
+    "name": "Vitamin B12",
+    "description": "Crucial for the formation of red blood cells and the maintenance of the central nervous system.",
+    "importance": "Deficiency can lead to megaloblastic anemia, fatigue, weakness, constipation, loss of appetite, and weight loss.",
+    "recommendedIntake": "2.4 µg per day",
+    "commonlyFound": ["Beef", "Chicken", "Fish", "Dairy products", "Eggs"]
+  },
+  {
+    "name": "Vitamin C",
+    "description": "Important for skin health, immune function, and wound healing.",
+    "importance": "Deficiency can lead to scurvy, characterized by fatigue, skin rashes, and bleeding gums.",
+    "recommendedIntake": "65 to 90 mg per day",
+    "commonlyFound": ["Oranges", "Strawberries", "Bell peppers", "Broccoli", "Kiwifruit"]
+  },
+  {
+    "name": "Vitamin D",
+    "description": "Essential for healthy bones and teeth, supports immune, brain, and nervous system health.",
+    "importance": "Deficiency can lead to osteoporosis and rickets.",
+    "recommendedIntake": "15 µg (600 IU) per day",
+    "commonlyFound": ["Salmon", "Sardines", "Egg yolks", "Shrimp", "Fortified milk"]
+  },
+  {
+    "name": "Vitamin E",
+    "description": "Acts as an antioxidant, helps protect cells from damage, and is important for the health of red blood cells.",
+    "importance": "Deficiency is rare but can cause nerve and muscle damage.",
+    "recommendedIntake": "15 mg per day",
+    "commonlyFound": ["Almonds", "Sunflower seeds", "Hazelnuts", "Peanut butter", "Spinach"]
+  },
+  {
+    "name": "Vitamin K",
+    "description": "Key role in helping the blood clot, preventing excessive bleeding.",
+    "importance": "Deficiency can lead to bleeding diathesis, an increased risk of bleeding and bruising.",
+    "recommendedIntake": "90 to 120 µg per day",
+    "commonlyFound": ["Kale", "Spinach", "Broccoli", "Brussels sprouts", "Green beans"]
+  },
+  {
+    "name": "Iron",
+    "description": "Essential for blood production and oxygen transport.",
+    "importance": "Iron deficiency can cause anemia, leading to fatigue and weakness.",
+    "recommendedIntake": "8 to 18 mg per day",
+    "commonlyFound": ["Red meat", "Poultry", "Beans", "Lentils", "Fortified cereals"]
+  },
+  {
+    "name": "Calcium",
+    "description": "Essential for strong bones and teeth, muscle function, and nerve signaling.",
+    "importance": "Deficiency can lead to osteoporosis and weakened bones.",
+    "recommendedIntake": "1000 to 1300 mg per day",
+    "commonlyFound": ["Milk", "Yogurt", "Cheese", "Broccoli", "Almonds"]
+  },
+  {
+    "name": "Magnesium",
+    "description": "Involved in over 300 biochemical reactions in the body, important for muscle and nerve function, blood glucose control, and bone health.",
+    "importance": "Deficiency can lead to muscle cramps, mental disorders, osteoporosis, and an increased risk of cardiovascular disease.",
+    "recommendedIntake": "310 to 420 mg per day",
+    "commonlyFound": ["Almonds", "Spinach", "Cashews", "Peanuts", "Black beans"]
+  },
+  {
+    "name": "Potassium",
+    "description": "Essential for cell function, helps regulate fluid balance, muscle contractions, and nerve signals.",
+    "importance": "Deficiency can cause muscle cramps, weakness, fatigue, and heart rhythm disturbances.",
+    "recommendedIntake": "2600 to 3400 mg per day",
+    "commonlyFound": ["Bananas", "Oranges", "Potatoes", "Spinach", "Beans"]
+  },
+  {
+    "name": "Zinc",
+    "description": "Plays a role in immune function, wound healing, protein synthesis, and DNA synthesis.",
+    "importance": "Deficiency can lead to hair loss, diarrhea, delayed wound healing, and a weakened immune system.",
+    "recommendedIntake": "8 to 11 mg per day",
+    "commonlyFound": ["Oysters", "Beef", "Chicken", "Pumpkin seeds", "Lentils"]
+  },
+  {
+    "name": "Sodium",
+    "description": "Essential for maintaining fluid balance, nerve function, and muscle contractions.",
+    "importance": "Deficiency is rare but can occur and cause headaches, nausea, vomiting, and dizziness.",
+    "recommendedIntake": "Less than 2300 mg per day",
+    "commonlyFound": ["Table salt", "Canned soups", "Processed meats", "Cheese", "Bread"]
+  },
+  {
+    "name": "Phosphorus",
+    "description": "Important for healthy bones and teeth, helps the body make ATP, a molecule the body uses to store energy.",
+    "importance": "Deficiency is rare but can lead to bone pain, muscle weakness, and a weakened immune system.",
+    "recommendedIntake": "700 mg per day",
+    "commonlyFound": ["Chicken", "Turkey", "Pork", "Dairy products", "Lentils"]
+  },
+  {
+    "name": "Selenium",
+    "description": "Plays a critical role in metabolism and thyroid function and helps protect your body from damage caused by oxidative stress.",
+    "importance": "Deficiency can lead to heart disease, infertility in men, and an increased risk of other diseases.",
+    "recommendedIntake": "55 µg per day",
+    "commonlyFound": ["Brazil nuts", "Fish", "Ham", "Enriched breads", "Poultry"]
+  },
+  {
+    "name": "Copper",
+    "description": "Important for iron metabolism, the formation of red blood cells, and helps maintain healthy bones, blood vessels, nerves, and immune function.",
+    "importance": "Deficiency can lead to anemia, bone abnormalities, and an increased risk of infection.",
+    "recommendedIntake": "900 µg per day",
+    "commonlyFound": ["Shellfish", "Whole grains", "Beans", "Nuts", "Potatoes"]
+  },
+  {
+    "name": "Iodine",
+    "description": "Essential for the production of thyroid hormones, which regulate metabolism, growth, and development.",
+    "importance": "Deficiency can lead to goiter and hypothyroidism, and in pregnant women, it can cause developmental issues in the fetus.",
+    "recommendedIntake": "150 µg per day",
+    "commonlyFound": ["Seaweed", "Fish", "Dairy", "Eggs", "Iodized salt"]
+  },
+  {
+    "name": "Calories",
+    "description": "A measure of energy from the food you eat. Your body needs a certain number of calories each day to perform basic functions and physical activities.",
+    "importance": "Essential for maintaining bodily functions and supporting physical activity. However, consuming too many calories can lead to weight gain, while consuming too few can lead to weight loss and nutritional deficiencies.",
+    "recommendedIntake": "Varies based on age, sex, weight, and activity level.",
+    "commonlyFound": ["Rice", "Pasta", "Bread", "Meat", "Dairy products"]
+  },
+  {
+    "name": "Protein",
+    "description": "A macronutrient made of amino acids, essential for building and repairing tissues, making enzymes and hormones, and supporting immune function.",
+    "importance": "Crucial for muscle growth, tissue repair, and maintaining a healthy immune system. Protein deficiency can lead to muscle wasting, weakened immunity, and other health issues.",
+    "recommendedIntake": "0.8 grams per kilogram of body weight per day for adults.",
+    "commonlyFound": ["Chicken", "Beef", "Fish", "Eggs", "Beans"]
+  },
+  {
+    "name": "Fat",
+    "description": "A macronutrient important for energy, supporting cell growth, protecting organs, and keeping the body warm. Includes saturated fats (SF), monounsaturated fats (MUFA), and polyunsaturated fats (PUFA).",
+    "importance": "Essential for absorbing vitamins and providing energy. However, excessive intake, especially of saturated and trans fats, can increase the risk of heart disease and stroke.",
+    "recommendedIntake": "Total fat intake should be 20-35% of total calories, with limited saturated fat.",
+    "commonlyFound": ["Avocado", "Olive oil", "Nuts", "Fatty fish", "Cheese"]
+  },
+  {
+    "name": "Fiber",
+    "description": "A type of carbohydrate that the body cannot digest, found in plant-based foods. It helps regulate the body's use of sugars and helps keep hunger and blood sugar in check.",
+    "importance": "Aids in digestion, prevents constipation, and may reduce the risk of developing heart disease and diabetes.",
+    "recommendedIntake": "25 grams per day for women and 38 grams per day for men.",
+    "commonlyFound": ["Beans", "Broccoli", "Berries", "Avocado", "Whole Grains"]
+  },
+  {
+    "name": "Sugar",
+    "description": "A simple carbohydrate that provides energy. There are natural sugars found in fruits, vegetables, and dairy, and added sugars that are added to foods during processing.",
+    "importance": "Natural sugars are part of a healthy diet, but added sugars can contribute to weight gain, diabetes, and heart disease.",
+    "recommendedIntake": "Limit added sugars to less than 10% of total daily calories.",
+    "commonlyFound": ["Soda", "Candy", "Baked Goods", "Fruit Juice", "Flavored Yogurts"]
+  },
+  {
+    "name": "Carbohydrate",
+    "description": "A macronutrient and the body's main source of energy. They are found in fruits, vegetables, grains, and dairy products.",
+    "importance": "Provide energy for the body, particularly the brain and the nervous system. An inadequate intake of carbohydrates can lead to a lack of energy, as well as difficulty concentrating and performing mental tasks.",
+    "recommendedIntake": "45-65% of total daily calories.",
+    "commonlyFound": ["Pasta", "Rice", "Bread", "Potatoes", "Cereals"]
+  },
+  {
+    "name": "GI",
+    "description": "Glycemic Index, a measure of how quickly foods containing carbohydrates raise blood sugar levels. Foods with a high GI are quickly digested and absorbed, causing a rapid rise in blood sugar.",
+    "importance": "Understanding GI can help with blood sugar management, which is particularly important for people with diabetes. Low-GI foods can also aid in weight control and reduce the risk of heart disease.",
+    "recommendedIntake": "Choose foods with a low or medium GI.",
+    "commonlyFound": ["White Bread", "Rice Cakes", "Pretzels", "Potatoes", "Watermelon"]
+  },
+  {
+    "name": "Manganese",
+    "description": "A trace mineral that plays a role in bone formation, blood clotting, and reducing inflammation.",
+    "importance": "Essential for the metabolism of amino acids, cholesterol, glucose, and carbohydrates. Manganese deficiency is rare, but can affect bone health and cause poor glucose tolerance.",
+    "recommendedIntake": "1.8 to 2.3 mg per day.",
+    "commonlyFound": ["Pineapple", "Almonds", "Sweet Potatoes", "Spinach", "Whole Wheat Bread"]
+  },
+  {
+    "name": "Folate",
+    "description": "Also known as Vitamin B9, is a B-vitamin essential for producing DNA and genetic material, and is particularly important during pregnancy for fetal development.",
+    "importance": "Folate is crucial for brain function and mental health, supporting DNA production and cell growth. Deficiency can lead to megaloblastic anemia, causing fatigue and weakness, and in pregnant women, it can cause neural tube defects in the baby.",
+    "recommendedIntake": "400 mcg daily for adults, 600 mcg during pregnancy, and 500 mcg while breastfeeding.",
+    "commonlyFound": ["Spinach", "Oranges", "Beans", "Nuts", "Fortified cereals"]
+  },
+  {
+    "name": "MUF",
+    "description": "Monounsaturated fats are healthy fats found in a variety of foods and oils. They can help reduce bad cholesterol levels in your blood and lower your risk of heart disease and stroke.",
+    "importance": "MUFs are essential for heart health and maintaining healthy cholesterol levels. They also provide nutrients to help develop and maintain your body’s cells. Insufficient intake can lead to increased risk of heart disease.",
+    "recommendedIntake": "Should make up 15-20% of your daily caloric intake.",
+    "commonlyFound": ["Olive oil", "Avocados", "Nuts", "Peanut butter", "Sesame seeds"]
+  },
+  {
+    "name": "SF",
+    "description": "Saturated fats are a type of fat found in animal products and some plant-based oils. They are solid at room temperature.",
+    "importance": "While necessary in moderation for bodily functions, excessive intake of SF can increase cholesterol levels and risk of heart disease. It's important to balance SF with healthier fats.",
+    "recommendedIntake": "Less than 10% of your total daily calories.",
+    "commonlyFound": ["Butter", "Cheese", "Red meat", "Coconut oil", "Palm oil"]
+  },
+  {
+    "name": "PUF",
+    "description": "Polyunsaturated fats are essential fats, meaning they are required for normal body functions but your body can’t make them, so you must get them from food.",
+    "importance": "PUFs are crucial for cell membrane structure and function, as well as the production of essential hormones. They can help reduce bad cholesterol levels. Lack of PUFs can lead to reduced immune function and skin problems.",
+    "recommendedIntake": "Should make up 5-10% of your daily caloric intake.",
+    "commonlyFound": ["Walnuts", "Sunflower seeds", "Flax seeds", "Fish oil", "Soybean oil"]
+  }
+
+]

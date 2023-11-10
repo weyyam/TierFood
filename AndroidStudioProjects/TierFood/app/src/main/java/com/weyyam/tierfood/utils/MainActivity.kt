@@ -24,11 +24,13 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.weyyam.tierfood.navigation.FoodProfile
 import com.weyyam.tierfood.navigation.FoodsList
 import com.weyyam.tierfood.navigation.Home
+import com.weyyam.tierfood.navigation.NutrientProfile
 import com.weyyam.tierfood.navigation.Profile
 import com.weyyam.tierfood.navigation.Register
 import com.weyyam.tierfood.navigation.Search
 import com.weyyam.tierfood.screens.FoodProfileScreen
 import com.weyyam.tierfood.screens.HomeScreen
+import com.weyyam.tierfood.screens.NutrientProfileScreen
 import com.weyyam.tierfood.screens.ProfileScreen
 import com.weyyam.tierfood.screens.RegisterScreen
 import com.weyyam.tierfood.screens.SearchScreen
@@ -254,6 +256,11 @@ class MainActivity : ComponentActivity() {
                     FoodProfileScreen(navController = navController, foodId = foodId, userFavoritesManager = userFavoritesManager,viewModel = FoodViewModel())
                 }
 
+            }
+
+            composable("${NutrientProfile.route}/{nutrientName}"){ navBackStackEntry ->
+                val nutrient = navBackStackEntry.arguments?.getString("nutrientName") ?: return@composable
+                NutrientProfileScreen(navController = navController, nutrient = nutrient)
             }
 
         }

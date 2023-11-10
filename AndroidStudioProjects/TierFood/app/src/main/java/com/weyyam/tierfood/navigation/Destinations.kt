@@ -27,3 +27,7 @@ object FoodsList: Destinations {
 object FoodProfile: Destinations{
     override val route = "FoodProfile/{name}"
 }
+
+object NutrientProfile: Destinations{
+    override val route = "NutrientProfile/{name}"
+}
