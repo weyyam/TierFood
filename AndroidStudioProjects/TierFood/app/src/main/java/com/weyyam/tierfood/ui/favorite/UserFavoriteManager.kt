@@ -9,19 +9,19 @@ open class UserFavoritesManager(private val userId: String) {
     private val db = FirebaseFirestore.getInstance()
     private val userFavoritesRef = db.collection("userFavorites").document(userId)
 
-    fun addFavorites(foodId: String, onSuccess: () -> Unit, onFailure: (Exception)-> Unit){
+    open fun addFavorites(foodId: String, onSuccess: () -> Unit, onFailure: (Exception)-> Unit){
         userFavoritesRef.update("favorites", FieldValue.arrayUnion(foodId))
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { e -> onFailure(e) }
     }
 
-    fun removeFavorites(foodId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit){
+    open fun removeFavorites(foodId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit){
         userFavoritesRef.update("favorites", FieldValue.arrayRemove(foodId))
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { e -> onFailure(e) }
     }
 
-    fun fetchFavorites(onSuccess: (List<String>) -> Unit, onFailure: (Exception) -> Unit){
+    open fun fetchFavorites(onSuccess: (List<String>) -> Unit, onFailure: (Exception) -> Unit){
         userFavoritesRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
@@ -34,7 +34,7 @@ open class UserFavoritesManager(private val userId: String) {
             .addOnFailureListener { e -> onFailure(e) }
     }
 
-    fun isFavorited(foodId: String, onResult: (Boolean) -> Unit){
+    open fun isFavorited(foodId: String, onResult: (Boolean) -> Unit){
         fetchFavorites(
             onSuccess = { favorites ->
                 onResult(foodId in favorites)
@@ -45,7 +45,7 @@ open class UserFavoritesManager(private val userId: String) {
         )
     }
 
-    fun initializeUserFavorites(){
+    open fun initializeUserFavorites(){
         userFavoritesRef.get()
             .addOnSuccessListener { document ->
                 if(document == null || !document.exists()){
