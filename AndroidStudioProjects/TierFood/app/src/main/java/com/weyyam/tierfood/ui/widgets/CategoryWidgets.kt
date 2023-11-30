@@ -81,9 +81,9 @@ fun CategoryIcon(category: String, imageResId: Int, onClick: (String) -> Unit){
         Text(
             text = category,
             fontSize = 20.sp,
-            color = colorResource(id = R.color.black),
+            color = colorResource(id = R.color.white),
             modifier = Modifier
                 .align(Alignment.BottomStart)
-                .background(colorResource(id = R.color.background_SecondaryL).copy(alpha = 0.6f)))
+                .background(colorResource(id = R.color.black).copy(alpha = 0.7f)))
     }
 }

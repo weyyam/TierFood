@@ -171,7 +171,8 @@ fun FoodProfileScreen(
     Scaffold (
         topBar = { TopBarAppView(navController = rememberNavController(), modifier = Modifier)},
         bottomBar = { BottomBarAppView(navController = rememberNavController(), modifier = Modifier)},
-        contentColor = colorResource(id = R.color.black)
+        contentColor = colorResource(id = R.color.black),
+        containerColor = colorResource(id = R.color.background_SecondaryL)
     ){ innerPadding ->
         Column(modifier = Modifier
             .fillMaxSize()

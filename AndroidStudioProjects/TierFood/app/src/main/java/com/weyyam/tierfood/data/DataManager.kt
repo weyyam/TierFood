@@ -49,11 +49,7 @@ class DataManager {
             .get()
             .addOnSuccessListener{document ->
                 val foodItem = document.toFoodItem()
-                if (foodItem != null){
-                    success(foodItem)
-                }else{
-                    failure(Exception("Document does not exist or cannot be found"))
-                }
+                success(foodItem)
             }
             .addOnFailureListener { exception ->
                 failure(exception)
@@ -165,7 +161,7 @@ class DataManager {
             tier = data["tier"] as String,
             imageURL = data["imageURL"] as String,
             type = data["type"] as String,
-            macros = data["marcos"] as Map<String, Double>?,
+            macros = data["macros"] as Map<String, Double>?,
             micros = data["micros"] as Map<String, Double>?
         )
     }

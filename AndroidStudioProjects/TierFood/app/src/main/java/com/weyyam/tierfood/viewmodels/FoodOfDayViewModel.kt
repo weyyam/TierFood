@@ -31,7 +31,13 @@ class FoodOfDayViewModel : ViewModel() {
         )
     }
 
-    private fun getFoodOfTheDay(foods: List<FoodItem>): FoodItem {
+    private fun getFoodOfTheDay(foods: List<FoodItem>): FoodItem? {
+
+        if (foods.isEmpty()){
+            Log.d("fodc", "Food List is empty")
+            return null
+        }
+
         val today = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date())
         val hashValue = today.hashCode()
         Log.i("fodc", "${foods.size}")

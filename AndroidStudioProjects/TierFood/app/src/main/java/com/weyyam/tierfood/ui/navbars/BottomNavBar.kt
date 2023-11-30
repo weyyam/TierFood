@@ -17,11 +17,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import com.weyyam.tierfood.R
 import com.weyyam.tierfood.navigation.Home
 import com.weyyam.tierfood.navigation.Profile
-import com.weyyam.tierfood.R
 import com.weyyam.tierfood.navigation.Search
 
 @Composable
@@ -41,7 +39,7 @@ fun BottomBarAppView(navController : NavController, modifier: Modifier){
             modifier = Modifier
                 .clickable { navController.navigate(Search.route) }
                 .size(36.dp),
-            painter = painterResource(id = R.drawable.baseline_search_24) ,
+            painter = painterResource(id = R.drawable.round_search_24) ,
             contentDescription = "Person for Profile",
             contentScale = ContentScale.Fit)
 
@@ -50,7 +48,7 @@ fun BottomBarAppView(navController : NavController, modifier: Modifier){
             modifier = Modifier
                 .clickable { navController.navigate(Home.route) }
                 .size(36.dp),
-            painter = painterResource(id = R.drawable.baseline_home_24) ,
+            painter = painterResource(id = R.drawable.round_home_24) ,
             contentDescription = "Person for Profile",
             contentScale = ContentScale.Fit)
 
@@ -59,7 +57,7 @@ fun BottomBarAppView(navController : NavController, modifier: Modifier){
             modifier = Modifier
                 .clickable { navController.navigate(Profile.route) }
                 .size(36.dp),
-            painter = painterResource(id = R.drawable.baseline_person_24) ,
+            painter = painterResource(id = R.drawable.round_person_24) ,
             contentDescription = "Person for Profile",
             contentScale = ContentScale.Fit)
 

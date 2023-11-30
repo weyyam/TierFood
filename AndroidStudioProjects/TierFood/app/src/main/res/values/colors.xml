@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="red_s">#9575CD</color>//red#E57373
-    <color name="orange_a">#FFB74D</color>//ornage#FFB74D
-    <color name="yellow_b">#FFF176</color>//yellow#FFF176
-    <color name="green_c">#81C784</color>//green#81C784
-    <color name="blue_d">#4FC3F7</color>//blue#4FC3F7
+    <color name="orange_a">#4FC3F7</color>//ornage#FFB74D
+    <color name="yellow_b">#81C784</color>//yellow#FFF176
+    <color name="green_c">#FFF176</color>//green#81C784
+    <color name="blue_d">#FFB74D</color>//blue#4FC3F7
     <color name="purple_f">#E57373</color>//purple#9575CD
     <!--<color name="background_SecondaryL">#878787</color>//Light color is #878787
     <color name="background_PrimaryD">#393939</color>//dark color is #393939-->

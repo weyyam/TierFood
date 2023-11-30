@@ -77,3 +77,42 @@ fun TierBoxFoodProfile(tier: String){
             fontWeight = FontWeight.Bold)
     }
 }
+
+
+@Composable
+fun TierBoxMeal(tier: String, modifier: Modifier = Modifier){
+    val tierRank = tierMap[tier] ?: error("String to tier invalid $tier")
+
+    Box(
+        modifier = modifier
+            .padding(6.dp)
+            .size(60.dp)
+            .clip(RoundedCornerShape(15))
+            .background(colorResource(id = tierRank.color)),
+        contentAlignment = Alignment.Center
+    ){
+        Text(
+            text = tierRank.letter,
+            fontSize = 26.sp,
+            fontWeight = FontWeight.Bold)
+    }
+}
+
+@Composable
+fun TierBoxMealIngredient(tier: String, modifier: Modifier = Modifier){
+    val tierRank = tierMap[tier] ?: error("String to tier invalid $tier")
+
+    Box(
+        modifier = modifier
+            .padding(6.dp)
+            .size(30.dp)
+            .clip(RoundedCornerShape(15))
+            .background(colorResource(id = tierRank.color)),
+        contentAlignment = Alignment.Center
+    ){
+        Text(
+            text = tierRank.letter,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold)
+    }
+}

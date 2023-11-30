@@ -31,6 +31,7 @@ import androidx.navigation.NavController
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.weyyam.tierfood.R
+import com.weyyam.tierfood.navigation.MealCreation
 import com.weyyam.tierfood.ui.feedback.FeedbackDialog
 
 @Composable
@@ -49,7 +50,7 @@ fun TopBarAppView(navController: NavController, modifier: Modifier){
         horizontalArrangement = Arrangement.SpaceEvenly
     ){
 
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = { navController.navigate(MealCreation.route) }) {
             Icon(
                 imageVector = Icons.Default.Add,
                 contentDescription = "Add food item icon")
